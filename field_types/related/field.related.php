@@ -8,7 +8,6 @@
  * @package		PyroStreams
  * @author		Parse19
  * @copyright	Copyright (c) 2011 - 2012, Adam Fairholm
- * @link 		https://github.com/adamfairholm/PyroStreams-Page-Field-Type
  *
  *	Usage:
  *	'name' => 'Tout/Trek Styles',
@@ -36,6 +35,14 @@ class Field_related
 										'name' => 'Kamal Lamichhane',
 										'url' => 'http://www.lkamal.com.np');
 	
+	/**
+	 * create CI instance
+	 */
+	public function __construct()
+	{
+		$this->CI =& get_instance();
+	}
+
 	// --------------------------------------------------------------------------
 
 	/**
@@ -55,16 +62,15 @@ class Field_related
 		{
 			$html .= '<option value="">'.get_instance()->config->item('dropdown_choose_null').'</option>';
 		}
-		
+
 		$table = $field->field_data['table'];
 		$key_field = isset($field->field_data['key_field']) ? $field->field_data['key_field'] : 'id';
 		$title_field = isset($field->field_data['title_field']) ? $field->field_data['title_field'] : 'title';
 		$where = isset($field->field_data['where']) ? $field->field_data['where'] : array();
 		$selected = $data['value'];
 
-		if ($pages = $this->CI->db->select("{$table}.{$key_field}, {$table}.{$title_field}")->get($table)->result())
+		if ($pages = $this->CI->db->where($where)->select("$table.$key_field, $table.$title_field")->get($table)->result())
 		{
-			
 
 			foreach($pages as $page)
 			{
@@ -74,11 +80,14 @@ class Field_related
 				//$dropdown[$page->$key_field] = $page->$title_field;
 			}
 		}
-		//echo $this->CI->db->last_query();exit;
+
+		//$this->CI->db->last_query();exit;
 		$html .= '</select>';
-		
+
 		return $html;
 	}
+
+
 
 	// --------------------------------------------------------------------------
 	
@@ -90,16 +99,23 @@ class Field_related
 	 * @param	array
 	 * @return	string
 	 */
-	public function pre_output($input, $params)
+	public function pre_output($input, $params, $field = false)
 	{
 		if ( ! $input or ! is_numeric($input)) return null;
-		
+
+		if($field == false) return null;
+
+		$table = $field->field_data['table'];
+		$key_field = isset($field->field_data['key_field']) ? $field->field_data['key_field'] : 'id';
+		$title_field = isset($field->field_data['title_field']) ? $field->field_data['title_field'] : 'title';
+		$where = isset($field->field_data['where']) ? $field->field_data['where'] : array();
+
 		// Get the page
 		$page = $this->CI->db
 						->limit(1)
-						->select('id, title')
-						->where('id', $input)
-						->get('pages')
+						->select("{$key_field}, {$title_field}")
+						->where($where)
+						->get($table)
 						->row();
 
 		if ( ! $page) return null;
@@ -117,16 +133,21 @@ class Field_related
 	 * @param	array
 	 * @return	array
 	 */
-	public function pre_output_plugin($input, $params)
+	public function pre_output_plugin($input, $params, $field)
 	{
 		if ( ! $input or ! is_numeric($input)) return null;
-	
+		
+		$table = $field->field_data['table'];
+		$key_field = isset($field->field_data['key_field']) ? $field->field_data['key_field'] : 'id';
+		$title_field = isset($field->field_data['title_field']) ? $field->field_data['title_field'] : 'title';
+		$where = isset($field->field_data['where']) ? $field->field_data['where'] : array();
+
 		// Get the page
 		$page = $this->CI->db
 						->limit(1)
-						->select('uri, slug, title, id, status')
-						->where('id', $input)
-						->get('pages')
+						->select('*')
+						->where($key_field, $input)
+						->get($table)
 						->row();
 
 		if ( ! $page) return null;
@@ -146,6 +167,57 @@ class Field_related
 		);		
 	}
 
+	/**
+	 * Table to relate
+	 *
+	 * @return	string
+	 */
+	public function param_table( $value = '' )
+	{
+		return array(
+			'input' 		=> form_input('table', $value),
+			'instructions'	=> $this->CI->lang->line('related.table_instruction')
+		);
+	}
+
+	/**
+	 * Key field to select
+	 *
+	 * @return	string
+	 */
+	public function param_key_field( $value = '' )
+	{
+		return array(
+			'input' 		=> form_input('key_field', $value),
+			'instructions'	=> $this->CI->lang->line('related.key_field_instruction')
+		);
+	}
+
+	/**
+	 * Title field to select
+	 *
+	 * @return	string
+	 */
+	public function param_title_field( $value = '' )
+	{
+		return array(
+			'input' 		=> form_input('title_field', $value),
+			'instructions'	=> $this->CI->lang->line('related.title_field_instruction')
+		);
+	}
+	
+	/**
+	 * Title field to select
+	 *
+	 * @return	string
+	 */
+	public function param_where( $value = '' )
+	{
+		return array(
+			'input' 		=> form_input('where', $value),
+			'instructions'	=> $this->CI->lang->line('related.where_instruction')
+		);
+	}
 	// --------------------------------------------------------------------------
 
 	/**
@@ -162,17 +234,22 @@ class Field_related
 	 */
 	private function _build_tree_select($params)
 	{
+		$table = $field->field_data['table'];
+		$key_field = isset($field->field_data['key_field']) ? $field->field_data['key_field'] : 'id';
+		$title_field = isset($field->field_data['title_field']) ? $field->field_data['title_field'] : 'title';
+		$where = isset($field->field_data['where']) ? $field->field_data['where'] : array();
+
 		$params = array_merge(array(
-			'table' => 'pages', 
-			'key_field' => 'id', 
-			'title_field' => 'title', 
-			'where' => array(),
+			'table' => $table, 
+			'key_field' => $key_field, 
+			'title_field' => $title_field, 
+			'where' => $where,
 		), $params);
 		
 		extract($params);
 
 		$html = '';
-		if ($pages = $this->CI->db->select("{$table}.{$key_field}, {$table}.{$title_field}")->get($table)->result())
+		if ($pages = $this->CI->db->where($where)->select("{$table}.{$key_field}, {$table}.{$title_field}")->get($table)->result())
 		{
 
 			foreach($pages as $page)
