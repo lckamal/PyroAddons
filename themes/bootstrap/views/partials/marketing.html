@@ -1,0 +1,18 @@
+<!-- Three columns of text below the carousel -->
+      <div class="row">
+	{{ pages:children id="1" limit="3" }}
+		<div class="col-lg-4">
+			{{ custom_fields }}
+			{{ if image }}
+          <img class="img-circle" src="{{url:site}}files/thumb/{{ image.id }}/140/140" alt="{{ image.name }}">
+          {{ endif }}
+          {{ /custom_fields }}
+          <h2>{{ title }}</h2>
+          {{ custom_fields }}
+		        <p>{{ excerpt:excerpt text=body word_count="35" show_link="false" }}</p>
+		  {{ /custom_fields }}
+          <p><a class="btn btn-default" href="{{ url:site }}{{ uri }}">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        
+	{{ /pages:children }}
+      </div><!-- /.row -->

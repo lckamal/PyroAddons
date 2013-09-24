@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="author" content="kamal lamichhane - lkamal.com.np">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+
+    <title>{{ settings:site_name }} &raquo; {{ template:title }}</title>
+
+    <!-- Set a base location for assets -->
+  <base href="{{ url:base }}"/>
+  <!-- End base -->
+
+    <!-- css -->
+   {{ theme:css file="bootstrap/bootstrap.css"}}
+   {{ theme:css file="bootstrap/bootstrap-glyphicons.css"}}
+   {{ theme:css file="style.css" }}
+   {{ theme:css file="plugins.css" }}
+
+   <!-- Js -->
+   {{ theme:js file="libs/modernizr.js"}}
+   {{ theme:js file="libs/jquery.js"}}
+   {{ theme:js file="bootstrap/bootstrap.min.js"}}
+   {{ theme:js file="fancybox/jquery.fancybox.js"}}
+   {{ theme:js file="fancybox/jquery.fancybox.pack.js"}}
+   {{ theme:js file="fancybox/helpers/jquery.fancybox-buttons.js"}}
+   {{ theme:js file="fancybox/helpers/jquery.fancybox-media.js"}}
+   {{ theme:js file="fancybox/helpers/jquery.fancybox-thumbs.js"}}
+  
+  {{ template:metadata }}
+  
+  <!-- Google Analytics -->
+  {{ integration:analytics }}
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<div class="navbar-wrapper">
+      <div class="container">
+      	{{ theme:partial name="navbar" }}

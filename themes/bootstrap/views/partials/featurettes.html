@@ -1,0 +1,44 @@
+<!-- START THE FEATURETTES -->
+       <hr class="featurette-divider">
+
+	{{ pages:display slug="featured" }}
+		{{ pages:children id=id limit="3" }}
+      		<div class="row featurette">
+      			<script type="text/javascript">
+      				var title = '{{ title }}';
+      			</script>
+      			{{ custom_fields }}
+      				{{ if count == 2 }}
+				          <div class="col-md-5">
+				          	{{ if image }}
+					          <img class="featurette-image img-responsive" src="{{url:site}}files/thumb/{{ image.id }}/500/500" alt="{{ image.name }}">
+				          {{ endif }}
+					        </div>
+      					<div class="col-md-7">
+				          <h2 class="featurette-heading">
+				          	<script type="text/javascript">
+			      				document.write(title);
+			      			</script>
+			      		</h2>
+					          <p class="lead">{{ excerpt:excerpt text=body word_count="100" show_link="true" link_text="read&nbsp;more" link_class="btn btn-default btn-xs" url=uri }}</p>
+					        </div>
+				    {{ else }}
+				    	<div class="col-md-7">
+				          <h2 class="featurette-heading">
+								<script type="text/javascript">
+				      				document.write(title);
+				      			</script>
+							</h2>
+				          		<p class="lead">{{ excerpt:excerpt text=body word_count="100" show_link="true" link_text="read&nbsp;more" link_class="btn btn-default btn-xs" url=uri }}</p>
+					        </div>
+				          <div class="col-md-5">
+				    	{{ if image }}
+					          <img class="featurette-image img-responsive" src="{{url:site}}files/thumb/{{ image.id }}/500/500" alt="{{ image.name }}">
+				          {{ endif }}
+					        </div>
+      				{{ endif }}
+      			{{ /custom_fields }}
+	        </div>
+       <hr class="featurette-divider">
+		{{ /pages:children }}
+	{{ /pages:display }}

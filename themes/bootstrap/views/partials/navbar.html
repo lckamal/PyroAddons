@@ -1,0 +1,39 @@
+
+
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{{ url:site }}">{{ settings:site_name }}</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                {{ navigation:links group="header" }}
+              </ul>
+              <ul class="head-nav nav navbar-nav navbar-right">
+					{{ if user:logged_in }}
+						{{ if user:logged_in }}
+						<li class="dropdown">
+					        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
+					        <ul class="dropdown-menu navbar-left pull-right">
+					          <li><a href="{{url:site}}my-profile">View Profile</a></li>
+					          <li><a href="{{url:site}}edit-profile">Edit Profile</a></li>
+					          <li><a href="{{ url:site }}users/logout">Logout</a></li>
+					        </ul>
+					      </li>
+					      {{ endif }}
+					{{ else }}
+						<li><a href="{{ url:site }}users/login">Login</a></li>
+						<li><a href="{{ url:site }}register">Register</a></li>
+					{{ endif }}
+				</ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /navbar -->

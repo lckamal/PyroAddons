@@ -1,0 +1,13 @@
+<div class="row-fluid">	
+		<div class="col-lg-12">
+			<div class="well well-sm">
+				<marquee scrollamount="3" onmouseover="this.setAttribute('scrollamount', 0, 0);" onmouseout="this.setAttribute('scrollamount', 6, 0);">
+					{{ pages:display slug="home-highlight" }}
+					    {{ custom_fields }}
+					        {{ body }}
+					    {{ /custom_fields }}
+					{{ /pages:display }}
+				</marquee>
+			</div>
+		</div>
+	</div>
