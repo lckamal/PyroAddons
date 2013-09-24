@@ -1,7 +1,10 @@
 #PyroCMS bootstrap 3 theme
-===========================
 
 ##installation
-change default layout to 
-<pre><div class="page-header"><h1>{{title}}</h1></div>
-<p> {{ body }}</p></pre>
+- add child pages under home page
+- add a page with slug highlight and add child pages
+- whichever layout you are on add a filed with slug image
+
+##dependency
+- sliders module
+
