@@ -1,0 +1,128 @@
+#calmain p, #calmain  ul, #calmain  ol {
+    line-height: 100%;
+}
+#calclip .cc_box{
+	margin: 5px auto;
+	font-size: 14px;
+}
+#calclip{
+	text-align:center;
+	margin: 0px auto;
+	width: 165px; padding:0px;
+}
+#calclip .cc_body ul li,#calclip .cc_head ul li{
+	width: 18px; padding:2px;
+	height: 18px; margin: 0px;
+	text-align: center;
+	background: url(../img/cells_lightgreen_s4.png); /* smallest */
+	font-family: Georgia,"Times New Roman",Times,serif;
+	color: #444; text-shadow:none;
+	position: relative;
+	list-style:none;
+	float:left; clear:right;
+}
+#calclip .cc_head ul li{
+	font-weight: bold;
+	font-size: 14px;
+}
+#calclip .cc_head ul , #calclip .cc_body ul{
+	list-style:none; clear:both; margin: 0;
+}
+
+#calclip .cc_body ul li:hover, #calclip .cc_head ul li:hover {
+	background-position: 0px -22px;
+	color: #222;
+}
+#calclip .cc_body ul li.date_has_event a{
+    text-shadow:none; background:none;
+	color:#ffffff; display:inline; border:none; width:auto;
+	padding: 1px 2px;
+}
+#calclip .cc_body ul li.date_has_event {
+	background-position: 44px 0px;
+	color: white;
+}
+#calclip .cc_body ul li.date_has_event:hover {
+	background-position: 44px 22px;
+}
+#calclip .cc_body ul li.padding {
+	background: url(../img/calpad.jpg);
+}
+#calclip .cc_body ul li#today {
+	background-position: 22px 0px;
+	color: white;
+	text-shadow:none;
+}
+#calclip .cc_body ul li#today:hover {
+	background-position: 22px 22px;
+}
+
+#calclip .events {
+	position: relative;
+}
+#calclip .events .event_box{
+    position: absolute; display:block;
+    z-index: 1000;
+}
+#calclip .events .event_box .clip_event_content {
+	height:100%;
+	color: #444444;
+	text-align: left;
+	display: none;
+	z-index: 1000;
+	padding: 15px;
+	background-color: #e9e9e9;
+	border: 1px solid white;
+	font-size: 15px;
+	width: 300px;
+	cursor:default;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-border-radius: 3px;
+	-webkit-box-shadow: 0px 8px 8px #333;
+}
+
+#calclip .events .event_box .clip_event_content span {
+	display: block;
+	font-size: 12px;
+	text-align: justify;
+	color: #555;
+}
+#calclip .events .event_box .clip_event_content span.title {
+	font-weight: bold;
+	color: #222;
+}
+
+#calclip .events .event_box .clip_event_content span.title a{
+	font-weight: bold;
+	color: #222;
+}
+
+#calclip .cc_head ul li a{
+text-decoration:none; background:none;
+font-size:120%; display:inline;
+font-weight:bold;
+color: #000;
+outline-width:0;
+}
+
+#calclip .dayevents{
+	border: 1px solid #666666;
+	padding: 10px;
+	text-align: left;
+}
+
+#calclip .dayevents h3{
+	background:none repeat scroll 0 0 #303030;
+color:#FFFFFF;
+font-weight:normal;
+letter-spacing:0.15em;
+padding:10px;
+}
+
+#calclip .dayevents{
+	border-bottom: 2px solid #cccccc;
+	margin-bottom: 20px;
+	padding: 0 0 20px 0;
+}

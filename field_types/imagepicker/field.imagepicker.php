@@ -35,6 +35,7 @@ class Field_imagepicker
 	public function __construct()
 	{
 		$this->CI =& get_instance();
+		$this->CI->load->library('files/files');
 	}
 	
 	/**
@@ -68,7 +69,6 @@ class Field_imagepicker
 							var view = (type == "i") ? image : name + \''.$del_button.'\';
 
 							$("#preview_'.$data['form_slug'].'").html(view);
-							//alert("you chose image: " + imageId + ", with width: " + size + " and alignment: " + alignment);
 						}
 					});
 					return false;
@@ -82,11 +82,19 @@ class Field_imagepicker
 				});
 			})(jQuery);
 		</script>';
-		$button_slug = isset($field->field_data['button_slug']) ? $field->field_data['button_slug'] : '';
-		$image_preview = ($data['value'] != "") ? '<img class="pyro-image" src="'.base_url().'files/thumb/'.$data['value'].'/'.$img_width.'/'.$img_width.'" width="'.$img_width.'"/>'.$del_button : "";
+		
 		$return .= form_input($options);
+		$preview = '';
+		if($data['value']){
+			$file = Files::get_file($data['value']);
+			if($file['status']){
+				$preview = $file['data']->type == 'i' 
+					? '<img class="pyro-image" src="'.base_url().'files/thumb/'.$data['value'].'/'.$img_width.'/'.$img_width.'" width="'.$img_width.'"/>'."&nbsp;".$del_button 
+					: $file['data']->name."&nbsp;".$del_button; 
+			}
+		}
 		$return .= '<button href="javascript:void(1)" data-type="'.$type.'" id="btn_'.$data['form_slug'].'" class="">Select '.$field->field_name.'</button>';
-		$return .= '<div id="preview_'.$data['form_slug'].'">'.$image_preview.'</div>';
+		$return .= '<div id="preview_'.$data['form_slug'].'">'.$preview.'</div>';
 		
 		return $return;
 	}

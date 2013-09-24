@@ -1,0 +1,243 @@
+
+#calmain p, #calmain  ul, #calmain  ol {
+    line-height: 100%;
+}
+
+form.crud label.intro {
+    display: block;
+    float: none;
+}
+li.date-meta div.selector {
+    float: left;
+    width: 70px;
+    /*background-position: -633px -130px;*/
+}
+li.date-meta div.selector span {
+    width: 28px;
+}
+li.date-meta label.time-meta {
+    width: auto;
+}
+.width-10{
+    width:10px;
+}
+#calmain table {
+	border-collapse: separate;
+	border: 1px solid #9DABCE;
+	border-width: 0px 0px 1px 1px;
+	margin: 10px auto;
+	font-size: 20px;
+    width: 468px;
+}
+#calmain td {
+	width: 71px;
+	height: 71px;
+	text-align: center;
+	vertical-align: middle;
+	background: url(../img/cells_sm.png);
+	color: #444;
+	position: relative;
+	padding:0px;
+}
+#calmain th {
+	height: 30px;
+	font-weight: bold;
+	font-size: 14px;
+	width: 71px;
+	text-align: center;
+	vertical-align: middle;
+	background: url(../img/cells_sm.png);
+	color: #444;
+	position: relative;
+	padding:0px;
+}
+#calmain td:hover, #calmain th:hover {
+	background-position: 0px -71px;
+	color: #222;
+}
+#calmain td.date_has_event {
+	background-position: 142px 0px;
+	color: white; cursor:pointer;
+}
+#calmain td.date_has_event:hover {
+	background-position: 142px -71px;
+}
+#calmain td.padding {
+	background: url(../img/calpad.jpg);
+}
+#calmain td#today {
+	background-position: 71px 0px;
+	color: white;
+}
+td#today:hover {
+	background-position: 71px -71px;
+}
+#calmain .events {
+	position: relative;
+}
+#calmain .events .event_box{
+    position: absolute;
+    z-index: 1000;
+}
+#calmain .events .event_box .event_content {
+	height:100%;
+	color: #444444;
+	text-align: left;
+	display: none;
+	z-index: 1000;
+	padding: 15px;
+	background: #E7ECF2 url(../img/popup_big.png) no-repeat;
+	border: 1px solid white;
+	font-size: 15px;
+	width: 300px;
+	cursor:default;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-border-radius: 3px;
+	
+	-webkit-box-shadow: 0px 8px 8px #333;
+}
+
+#calmain .events .event_box .event_content span {
+	display: block;
+	font-size: 12px;
+	text-align: justify;
+	color: #555;
+}
+#calmain .events .event_box .event_content span.title {
+	font-weight: bold;
+	color: #222;
+}
+
+#calmain .events .event_box .event_content div.titledate {
+	font-style: italic; font-size:11px; 
+	color: #444444;
+	text-align:right;
+}
+
+#calmain th a{
+text-decoration:none;
+font-size:120%;
+font-weight:bold;
+color: #000;
+outline-width:0;
+}
+
+#calmain .dayevents{
+	border: 1px solid #666666;
+	padding: 10px;
+	text-align: left;
+}
+
+#calmain .dayevents h3{
+	background:none repeat scroll 0 0 #303030;
+color:#FFFFFF;
+font-weight:normal;
+letter-spacing:0.15em;
+padding:10px;
+}
+
+#calmain{
+	margin-top: 50px;
+}
+#calmain .dayevents{
+	border-bottom: 2px solid #cccccc;
+	margin-bottom: 20px;
+	padding: 0 0 20px 0;
+}
+
+#calmain tfoot th a{
+	padding: 2px 15px 2px 15px;
+}
+
+#navcontainer ul li {
+    display: inline;
+}
+
+
+#navcontainer ul li a {
+    color: #333333;
+    float: right;
+    letter-spacing: 0.12em;
+    padding: 0 1em;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+.date_has_event a{
+    color:#ffffff;
+}
+
+#calmain h2 {
+    text-align: center;
+}
+
+.calendar_list{
+    margin: 7px 0px 7px 0px; padding:4px;
+}
+.list_darken{
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#13999999,endColorstr=#13999999);
+    background-color:rgba(160, 160, 160, 0.1);
+}
+.calendar_list_heading{
+    font-size:16px; font-weight:bold; margin: 0px 0px 0px 0px; line-height: 1.8em;
+    padding: 0px 0px 0px 20px; background:transparent url("../img/dot4.gif") no-repeat 0px 8px;
+}
+.calendar_list_info{
+    font-size:11px;  margin: 2px 0px 7px 0px; padding: 0px 0px 0px 20px; font-style: italic;
+}
+.calendar_list_intro{
+    font-size:12px;  margin: 8px 0px 8px 0px; padding: 4px 4px 4px 4px; line-height: 1.8em;
+}
+.calendar_list_link{
+    font-size:12px;  margin: 6px 0px 4px 0px; padding: 0px 0px 0px 0px; line-height: 1.4em; font-weight:bold;
+}
+.calendar_another{
+    font-size:18px; font-weight:bold; margin: 3px 0px 7px 0px;
+    padding: 0px 0px 0px 20px; background:transparent url("../img/dot8.gif") no-repeat 0px 3px;
+}
+
+div#content .post div form input{
+    border-radius: 3px 3px 3px 3px; text-shadow: none;
+	background-color: #F6F6F6;
+    border: 1px solid #CCCCCC; padding:2px; margin:2px;
+	color: #4D4D4D;
+    font-family: Tahoma,"Helvetica Neue",Helvetica,sans-serif;
+	width: 130px;
+	vertical-align: middle; text-align:center;
+	display:inline; float:none; clear:none; 
+}
+
+div#content .post div form input[name='txs_title']{
+	width: 337px; text-align:left;
+}
+
+#calformcont{
+	border-radius: 3px 3px 3px 3px; text-shadow: none;
+	background-color: rgba(240,240,240,0.4);
+	border: 1px solid rgba(204,204,204,0.6); padding:6px 12px 6px 12px ; margin:0px;
+}
+
+div.cal_search{
+	float:left; clear:right;
+	width:25%;
+}
+
+.cal_menu{
+    clear:both; padding: 0px 0px 8px 0px; text-align: right;
+}
+.cal_menu a{
+    /*border: 1px solid #949494;*/
+    font-weight: bold; font-size:12px;
+    margin: 1px 5px 0px 0px;
+    opacity: 0.85;
+    padding: 4px 14px 3px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #e0e0e0;
+}
+.cal_menu a:hover{
+    /*border: 1px solid #737373;*/
+    background-color: #c7c7c7;
+}
