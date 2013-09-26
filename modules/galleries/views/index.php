@@ -1,4 +1,6 @@
-<h2 id="page_title"><?php echo lang('galleries.galleries_label'); ?></h2>
+<div class="panel panel-default">
+  <div class="panel-heading"><b><?php echo lang('galleries.galleries_label'); ?></b></div>
+  <div class="panel-body">
 
 <div class="galleries_container" id="gallery_index">
 	
@@ -28,4 +30,6 @@
 	<p><?php echo lang('galleries.no_galleries_error'); ?></p>
 	
 	<?php endif; ?>
+</div>
+</div>
 </div>

@@ -42,11 +42,10 @@ class Gallery_m extends MY_Model {
 	public function get_all()
 	{
 		$this->db
-			->select('galleries.*, file_folders.slug as folder_slug, file_folders.name as folder_name, u.username, u.group_id, g.name group, d.datenprice_ref')
+			->select('galleries.*, file_folders.slug as folder_slug, file_folders.name as folder_name, u.username, u.group_id, g.name group')
 			->join('file_folders', 'file_folders.id = galleries.folder_id', 'left')
 			->join('users u', 'u.id = galleries.user_id', 'left')
-			->join('groups g', 'g.id = u.group_id', 'left')
-			->join('datenprices d', 'd.id = galleries.datenprice_id', 'left');
+			->join('groups g', 'g.id = u.group_id', 'left');
 
 		$galleries	= parent::get_all();
 

@@ -13,8 +13,6 @@
 				<tr>
 					<th width="30"><?php echo form_checkbox(array('name' => 'action_to_all', 'class' => 'check-all'));?></th>
 					<th><?php echo lang('galleries.gallery_label'); ?></th>
-					<th>User Group</th>
-					<th>Date & Price</th>
 					<th width="140"><?php echo lang('galleries.num_photos_label'); ?></th>
 					<th width="140"><?php echo lang('galleries.updated_label'); ?></th>
 					<th>Published</th>
@@ -33,8 +31,6 @@
 				<tr>
 					<td><?php echo form_checkbox('action_to[]', $gallery->id); ?></td>
 					<td><?php echo anchor('admin/galleries/preview/' . $gallery->id, $gallery->title, 'target="_blank" class="modal-large"'); ?></td>
-					<td><?php echo $gallery->group; ?></td>
-					<td><?php echo $gallery->datenprice_ref; ?></td>
 					<td><?php echo $gallery->photo_count; ?></td>
 					<td><?php echo format_date($gallery->updated_on); ?></td>
 					<td><?php echo ($gallery->published == 1) ? '<span style="color:green">Yes<span>' : '<span style="color:red">No</span>'; ?></td>

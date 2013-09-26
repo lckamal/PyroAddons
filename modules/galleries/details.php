@@ -153,18 +153,6 @@ class Module_Galleries extends Module {
 	            'is_gui' => 1,
 	            'module' => 'galleries'
             );
-            $setting_data[] = array(
-	            'slug' => 'images_per_user',
-	            'title' => 'Maximum Images Per user',
-	            'description' => 'Maximum nos of images user can upload per trip.',
-	            'default' => 10,
-	            'value' => '10',
-	            'type' => 'text',
-	            'options' => '',
-	            'is_required' => 1,
-	            'is_gui' => 1,
-	            'module' => 'galleries'
-            );
             if($this->db->insert_batch('settings', $setting_data)){
 		        $return = TRUE;
 	        }
@@ -190,7 +178,7 @@ class Module_Galleries extends Module {
         $this->load->model('files/file_folders_m');
         //$this->load->model('settings/settings_m');
 
-        $folder_slug = 'holidays-users-gallery';
+        $folder_slug = 'photo-gallery';
 
         if ($action == 'add') {
             	
@@ -201,7 +189,7 @@ class Module_Galleries extends Module {
 				$folder = (array)$user_folder;
 			}
 			else{
-				$user_folder = Files::create_folder($parent_id, 'Holidays Users Gallery');
+				$user_folder = Files::create_folder($parent_id, 'Photo Gallery');
 				$folder = $user_folder['data'];
 			}
 			

@@ -1,4 +1,6 @@
-<h2 id="page_title"><?php echo $gallery->title; ?></h2>
+<div class="panel panel-default">
+  <div class="panel-heading"><b><?php echo $gallery->title; ?></b></div>
+  <div class="panel-body">
 <!-- Div containing all galleries -->
 <div class="galleries_container" id="gallery_single">
 	<div class="gallery clearfix">
@@ -7,12 +9,12 @@
 			<p><?php echo $gallery->description; ?></p>
 		</div>
 		<!-- The list containing the gallery images -->
-		<ul class="galleries_list">
+		<ul class="list-inline">
 			<?php if ($gallery_images): ?>
 			<?php foreach ( $gallery_images as $image): ?>
-			<li>
-				<a href="<?php echo site_url('galleries/'.$gallery->slug.'/'.$image->id); ?>" class="gallery-image" rel="gallery-image" data-src="<?php echo site_url('files/large/'.$image->file_id); ?>" title="<?php echo $image->name; ?>">
-					<?php echo img(array('src' => site_url('files/thumb/'.$image->file_id), 'alt' => $image->name)); ?>
+			<li class="list-group-item">
+				<a href="<?php echo site_url('files/large/'.$image->file_id); ?>" class="fancybox" rel="gallery-image" title="<?php echo $image->name; ?>">
+					<?php echo img(array('src' => site_url('files/thumb/'.$image->file_id.'/120/120'), 'alt' => $image->name, 'height' => 100)); ?>
 				</a>
 			</li>
 			<?php endforeach; ?>
@@ -51,3 +53,5 @@
 <?php if ($gallery->enable_comments == 1): ?>
 	<?php //echo display_comments($gallery->id);?>
 <?php endif; ?>
+  </div>
+</div>

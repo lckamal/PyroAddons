@@ -93,7 +93,9 @@ class Galleries extends Public_Controller
         }
         
 		$this->template
-				
+			->append_css('module::fancybox/jquery.fancybox.css')
+			->append_js('module::fancybox/jquery.fancybox.pack.js')
+			->append_js('module::gallery.js')
 			->build('gallery', array(
 				'gallery'			=> $gallery,
 				'gallery_images'	=> $gallery_images,
