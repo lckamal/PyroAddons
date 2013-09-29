@@ -137,10 +137,10 @@ class Field_related
 	{
 		if ( ! $input or ! is_numeric($input)) return null;
 		
-		$table = $field->field_data['table'];
-		$key_field = isset($field->field_data['key_field']) ? $field->field_data['key_field'] : 'id';
-		$title_field = isset($field->field_data['title_field']) ? $field->field_data['title_field'] : 'title';
-		$where = isset($field->field_data['where']) ? $field->field_data['where'] : array();
+		$table = $params['field_data']['table'];
+		$key_field = isset($params['field_data']['key_field']) ? $params['field_data']['key_field'] : 'id';
+		$title_field = isset($params['field_data']['title_field']) ? $params['field_data']['title_field'] : 'title';
+		$where = isset($params['field_data']['where']) ? $params['field_data']['where'] : array();
 
 		// Get the page
 		$page = $this->CI->db
@@ -152,19 +152,7 @@ class Field_related
 
 		if ( ! $page) return null;
 		
-		$this->CI->load->helper('url');
-		
-		// Is this the current one?
-		$current = ($page->uri == $this->CI->uri->uri_string()) ? true : false;
-
-		return array(
-			'link'		=> site_url($page->uri),
-			'slug'		=> $page->slug,
-			'title'		=> $page->title,
-			'id'		=> $page->id,
-			'status'	=> $page->status,
-			'current'	=> $current
-		);		
+		return $page;	
 	}
 
 	/**
