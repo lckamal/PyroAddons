@@ -71,7 +71,7 @@ class Field_multiimage
 		}
 		else
 		{
-			$out .= form_hidden($params['form_slug'], 'dummy');
+			$out .= form_hidden($params['form_slug'], null);
 		}
 
 		$options['name'] 	= $params['form_slug'].'_file[]';
@@ -120,9 +120,12 @@ class Field_multiimage
 		$allowed_types 	= (isset($field->field_data['allowed_types'])) ? $field->field_data['allowed_types'] : '*';
 		
 		$field_slug = $field->field_slug.'_file';
+		
 		$multifiles = $_FILES[$field_slug];
-		$_FILES = null;
+		
+		$_FILES[$field_slug] = null;
 		$myfiles = array();
+		
 		foreach ($multifiles['name'] as $key => $files)
 		{
 			$myfiles[$field_slug.$key]['name'] = $files;
@@ -156,11 +159,10 @@ class Field_multiimage
 			}
 			
 			//delete unnecessary files and update the selected file to db
-			ci()->load->driver('streams/streams');
+			ci()->load->driver('Streams');
 			$field_slug = $field->field_slug;
 			$entries_files = ci()->streams->entries->get_entry($row_id, $stream->stream_slug, $stream->stream_namespace, false)->$field_slug;
 			$rfiles = $this->filter_images($entries_files, $form_data[$field->field_slug]);
-			
 			if($rfiles)
 			{
 				$files = array_merge($rfiles, (array)$files);
