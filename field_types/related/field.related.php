@@ -66,9 +66,8 @@ class Field_related
 		$table = $field->field_data['table'];
 		$key_field = isset($field->field_data['key_field']) ? $field->field_data['key_field'] : 'id';
 		$title_field = isset($field->field_data['title_field']) ? $field->field_data['title_field'] : 'title';
-		$where = isset($field->field_data['where']) ? $field->field_data['where'] : array();
+		$where = isset($field->field_data['where']) && !empty($field->field_data['where']) ? $field->field_data['where'] : array();
 		$selected = $data['value'];
-
 		if ($pages = $this->CI->db->where($where)->select("$table.$key_field, $table.$title_field")->get($table)->result())
 		{
 
@@ -99,28 +98,25 @@ class Field_related
 	 * @param	array
 	 * @return	string
 	 */
-	public function pre_output($input, $params, $field = false)
+	public function pre_output($input, $field)
 	{
 		if ( ! $input or ! is_numeric($input)) return null;
 
-		if($field == false) return null;
 
-		$table = $field->field_data['table'];
-		$key_field = isset($field->field_data['key_field']) ? $field->field_data['key_field'] : 'id';
-		$title_field = isset($field->field_data['title_field']) ? $field->field_data['title_field'] : 'title';
-		$where = isset($field->field_data['where']) ? $field->field_data['where'] : array();
+		$table = $field['field_data']['table'];
+		$key_field = isset($field['field_data']['key_field']) ? $field['field_data']['key_field'] : 'id';
+		$title_field = isset($field['field_data']['title_field']) ? $field['field_data']['title_field'] : 'title';
 
 		// Get the page
 		$page = $this->CI->db
 						->limit(1)
 						->select("{$key_field}, {$title_field}")
-						->where($where)
 						->get($table)
 						->row();
-
+						
 		if ( ! $page) return null;
 				
-		return '<a href="'.site_url('admin/pages/edit/'.$page->id).'">'.$page->title.'</a>';
+		return $page->$title_field;
 	}
 
 	// --------------------------------------------------------------------------
@@ -199,7 +195,7 @@ class Field_related
 	 *
 	 * @return	string
 	 */
-	public function param_where( $value = '' )
+	public function param_where( $value = null )
 	{
 		return array(
 			'input' 		=> form_input('where', $value),
