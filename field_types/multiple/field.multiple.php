@@ -139,9 +139,9 @@ if ( ! class_exists('Field_multiple')) {
             }
 
             $title_column = $join_stream->title_column;
-
+			
             // Default to ID for title column if not present
-            if ( ! trim($title_column) or ! $this->CI->db->field_exists($title_column, $stream->stream_prefix.$join_stream->stream_slug)) {
+            if ( ! trim($title_column) or ! $this->CI->db->field_exists($title_column, $join_stream->stream_prefix.$join_stream->stream_slug)) {
                 $title_column = 'id';
             }
 
@@ -150,7 +150,6 @@ if ( ! class_exists('Field_multiple')) {
             // -------------------------------------
             // Figure out Join Table
             // -------------------------------------
-
             $join_table = $this->CI->db->dbprefix($stream->stream_prefix.$stream->stream_slug.'_'.$join_stream->stream_slug);
 
             // -------------------------------------
@@ -161,7 +160,7 @@ if ( ! class_exists('Field_multiple')) {
 
             $this->CI->db->from($join_table.' AS jt');
             $this->CI->db->where('jt.row_id', $row_id, false);
-            $this->CI->db->join($stream->stream_prefix.$join_stream->stream_slug, 'jt.'.$join_stream->stream_slug.'_id = '.$stream->stream_prefix.$join_stream->stream_slug.'.id');
+            $this->CI->db->join($join_stream->stream_prefix.$join_stream->stream_slug, 'jt.'.$join_stream->stream_slug.'_id = '.$join_stream->stream_prefix.$join_stream->stream_slug.'.id');
             $query = $this->CI->db->get();
 
             foreach ($query->result() as $node) {
@@ -427,8 +426,9 @@ if ( ! class_exists('Field_multiple')) {
             if ($ui == 'dragdrop') {
                 return $this->CI->type->load_view('multiple', 'sort_table', $form_data, true);
             } else {
+            	
                 return form_multiselect($data['form_slug'].'[]',
-                            $form_data['choices']+$form_data['current'],
+                            (array)$form_data['choices']+$form_data['current'],
                             array_keys($form_data['current']));
             }
         }
