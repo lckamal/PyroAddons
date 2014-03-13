@@ -151,13 +151,13 @@ class Gallery_m extends MY_Model {
             'folder_id'         => $input['folder_id'],
             'description'       => $input['description'],
             'enable_comments'   => $input['enable_comments'],
-            'thumbnail_id'      => ! empty($input['gallery_thumbnail']) ? (int) $input['gallery_thumbnail'] : NULL,
+            'thumbnail_id'      => $input['gallery_thumbnail'] ? $input['gallery_thumbnail'] : NULL,
             'published'         => $input['published'],
             'updated_on'        => time(),
             'css'               => $input['css'],
             'js'                => $input['js']
         );
-        return parent::update($id, $gal_data);
+        return parent::update($primary_value, $gal_data);
 	}
 
 	/**
@@ -175,46 +175,4 @@ class Gallery_m extends MY_Model {
 		) > 0;
 	}
 	
-	/**
-	 * get all users galleries of a holiday
-	 * 
-	 * @author Kamal Lamichhane - lkamal.com.np
-	 * @param int $holiday_id
-	 * @return array of object
-	 */
-	public function get_gallery_by_holiday($holiday_id = 0)
-	{
-		//$this->load->model('holidays/holiday_m');
-		$this->load->model('holidays/datenprice_m');
-		$this->load->model('galleries/gallery_image_m');
-		$this->load->library('files/files');
-		
-		$datenprices = $this->select('id')->datenprice_m->get_many_by('holiday', $holiday_id);
-		
-		$data = array();
-		if(is_array($datenprices))
-		{
-			foreach($datenprices as $datenprice)
-			{
-				$gallery = $this->get_many_by('datenprice_id', $datenprice->id);
-				if($gallery){
-					foreach($gallery as $gal)
-					{
-						$images = $this->gallery_image_m->select('file_id')->get_many_by('gallery_id', $gal->id);
-						if($images)
-						{
-							foreach($images as $img)
-							{
-								$file = Files::get_file($img->file_id);
-								$gal->images[$img->file_id] = ($file['status'] === TRUE) ? $file['data']->name : NULL;
-							}
-						}
-					}
-					$data = $gallery;
-				}
-			}
-		}
-		return $data;
-		
-	}
 }

@@ -21,7 +21,7 @@
 			</thead>
 			<tfoot>
 				<tr>
-					<td colspan="5">
+					<td colspan="6">
 						<div class="inner"><?php $this->load->view('admin/partials/pagination'); ?></div>
 					</td>
 				</tr>
@@ -36,7 +36,7 @@
 					<td><?php echo ($gallery->published == 1) ? '<span style="color:green">Yes<span>' : '<span style="color:red">No</span>'; ?></td>
 					<td class="align-center buttons buttons-small">
 						<?php if ($gallery->folder_id && isset($folders[$gallery->folder_id]) && $path = $folders[$gallery->folder_id]->virtual_path): ?>
-							<?php echo anchor('admin/files#!path='.$path, lang('galleries.upload_label'), 'class="button"'); ?>
+							<?php echo anchor('admin/files#='.$path, lang('galleries.upload_label'), 'class="button"'); ?>
 						<?php endif; ?>
 						<?php echo anchor('admin/galleries/manage/'.$gallery->id, lang('galleries.manage_label'), 'class="button"'); ?>
 						<?php echo anchor('admin/galleries/delete/'.$gallery->id, lang('global:delete'), array('class'=>'confirm button delete')); ?>

@@ -2,7 +2,7 @@
 
 class Module_Galleries extends Module {
 
-	public $version = '2.1';
+	public $version = '2.2';
 
 	public function info()
 	{
@@ -77,6 +77,9 @@ class Module_Galleries extends Module {
 	
 	public function upgrade($old_version)
 	{
+		if($old_version <= 2.1){
+			$this->db->query("ALTER TABLE  `default_galleries` CHANGE  `thumbnail_id`  `thumbnail_id` CHAR( 15 ) NULL DEFAULT NULL ;");
+		}
 		return TRUE;
 	}
 	/**
@@ -97,7 +100,7 @@ class Module_Galleries extends Module {
 			  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 			  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 			  `folder_id` int(11) NOT NULL,
-			  `thumbnail_id` int(11) DEFAULT NULL,
+			  `thumbnail_id` char(15) DEFAULT NULL,
 			  `description` text COLLATE utf8_unicode_ci,
 			  `updated_on` int(15) DEFAULT NULL,
 			  `preview` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

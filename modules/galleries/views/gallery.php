@@ -1,27 +1,27 @@
-<div class="panel panel-default">
-  <div class="panel-heading"><b><?php echo $gallery->title; ?></b></div>
-  <div class="panel-body">
-<!-- Div containing all galleries -->
-<div class="galleries_container" id="gallery_single">
-	<div class="gallery clearfix">
+<div class="container_12">
+      <div class="grid_12">
+        <h2><?php echo $gallery->title; ?>
+        <a class="btn btn-danger btn-sm pull-right" href="{{ url:site }}galleries"><i class="fa fa-long-arrow-left fa-lg"></i> Back to galleries</a>
+        </h2>
+      </div>
+
+      <div class="clear"></div>
+	<div class="row">
 		<!-- A gallery needs a description.. -->
 		<div class="gallery_heading">
 			<p><?php echo $gallery->description; ?></p>
 		</div>
 		<!-- The list containing the gallery images -->
-		<ul class="list-inline">
 			<?php if ($gallery_images): ?>
 			<?php foreach ( $gallery_images as $image): ?>
-			<li class="list-group-item">
-				<a href="<?php echo site_url('files/large/'.$image->file_id); ?>" class="fancybox" rel="gallery-image" title="<?php echo $image->name; ?>">
-					<?php echo img(array('src' => site_url('files/thumb/'.$image->file_id.'/120/120'), 'alt' => $image->name, 'height' => 100)); ?>
+			<div class="col-4" style="margin-bottom:40px;">
+				<a href="<?php echo site_url('files/large/'.$image->file_id); ?>" class="fancybox thumbnail" rel="gallery-image" title="<?php echo $image->name; ?>">
+					<?php echo img(array('src' => site_url('files/thumb/'.$image->file_id.'/300/300'), 'alt' => $image->name, 'width' => 300)); ?>
 				</a>
-			</li>
+			</div>
 			<?php endforeach; ?>
 			<?php endif; ?>
-		</ul>
 	</div>
-</div>
 <br style="clear: both;" />
 <?php if ( ! empty($sub_galleries) ): ?>
 <h2><?php echo lang('galleries.sub-galleries_label'); ?></h2>
@@ -54,4 +54,3 @@
 	<?php //echo display_comments($gallery->id);?>
 <?php endif; ?>
   </div>
-</div>

@@ -77,7 +77,7 @@ class Galleries extends Public_Controller
 		$slug or show_404();
 		if($this->input->get('mode') == 'preview')
 		{
-			$this->template->set_layout('blank');
+			$this->template->set_layout('blank.html');
 		}
 		//Get the total number of the galleries
 		$tot_galleries = $this->gallery_m->tot_galleries();
