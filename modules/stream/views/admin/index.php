@@ -32,9 +32,9 @@
 				<td><?php echo $item['stream_namespace']?></td>
 				<td><?php echo $item['stream_prefix']?></td>
                 <td class="actions">
-                	<?php echo anchor('admin/stream/fields/index/' . $item['stream_slug'] .'/'. $item['stream_namespace'], lang('stream:fields'), array('class'=>'button blue')); ?>
-                	<?php echo anchor('admin/stream/edit/' . $item['id'] . $item['stream_slug'] .'/'. $item['stream_namespace'], lang('global:edit'), array('class'=>'button blue')); ?>
-					<?php echo anchor('admin/stream/delete/' . $item['id'] . $item['stream_slug'] .'/'. $item['stream_namespace'], lang('global:delete'), array('class'=>'confirm button red delete')); ?>
+                	<?php echo anchor('admin/stream/fields/index/' . '/' . $item['stream_slug'] .'/'. $item['stream_namespace'], lang('stream:fields'), array('class'=>'button blue')); ?>
+                	<?php echo anchor('admin/stream/edit/' . $item['id'] . '/' . $item['stream_slug'] .'/'. $item['stream_namespace'], lang('global:edit'), array('class'=>'button blue')); ?>
+					<?php echo anchor('admin/stream/delete/' . $item['id'] . '/' . $item['stream_slug'] .'/'. $item['stream_namespace'], lang('global:delete'), array('class'=>'confirm button red delete')); ?>
 						
 				</td>
 			</tr>

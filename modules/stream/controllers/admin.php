@@ -52,7 +52,7 @@ class Admin extends Admin_Controller
             )
         );
 
-        $this->streams->cp->entries_table('data_streams', 'stream', 25, 'admin/stream/index', true, $extra);
+        $this->streams->cp->entries_table('data_streams', 'stream', 100, 'admin/stream/index', true, $extra);
     }
 
     // --------------------------------------------------------------------------
@@ -78,7 +78,7 @@ class Admin extends Admin_Controller
         $params = array(
             'stream' => 'data_streams',
             'namespace' => 'stream',
-            'paginate' => 'yes',
+            'paginate' => 'no',
             'page_segment' => 3
         );
 

@@ -50,18 +50,18 @@ class Module_Stream extends Module
     public function install()
     {
 		$this->stream('add');
+        $this->stream_fields();
         return true;
     }
 
     public function uninstall()
     {
-		$this->stream('remove');
+		// $this->stream('remove');
         return true;
     }
 	
     public function upgrade($old_version)
     {
-    	$this->stream_fields();
         // Your Upgrade Logic
         return true;
     }
@@ -78,7 +78,7 @@ class Module_Stream extends Module
 			
 		}else{
 			
-	        //$this->streams->utilities->remove_namespace('stream');
+	        $this->streams->utilities->remove_namespace('stream');
 		}
 		return TRUE;
 	}
@@ -94,6 +94,7 @@ class Module_Stream extends Module
 		$this->streams->utilities->convert_column_to_field($stream_slug, $namespace, 'Stream prefix', 'stream_prefix', 'text', $extra = array('max_length' => '50'));
 		$this->streams->utilities->convert_column_to_field($stream_slug, $namespace, 'About Stream', 'about', 'text', $extra = array('max_length' => '100'));
 		$this->streams->utilities->convert_column_to_field($stream_slug, $namespace, 'View Options', 'view_options', 'text', $extra = array('max_length' => '100'));
+        $this->streams->utilities->convert_column_to_field($stream_slug, $namespace, 'Title Column', 'title_column', 'text', $extra = array('max_length' => '30'));
 		$this->streams->utilities->convert_column_to_field($stream_slug, $namespace, 'Sorting by', 'sorting', 'choice', 
 				$extra = array('choice_data' => "title : Title\ncustom : Custom", 'choice_type' => 'dropdown', 'default_value' => 'title'));
 		$this->streams->utilities->convert_column_to_field($stream_slug, $namespace, 'Is Hidden', 'is_hidden', 'choice', 
