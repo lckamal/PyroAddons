@@ -102,15 +102,16 @@ class Field_related
 	{
 		if ( ! $input or ! is_numeric($input)) return null;
 
-
 		$table = $field['field_data']['table'];
 		$key_field = isset($field['field_data']['key_field']) ? $field['field_data']['key_field'] : 'id';
 		$title_field = isset($field['field_data']['title_field']) ? $field['field_data']['title_field'] : 'title';
+		$where = array($key_field => $input);
 
 		// Get the page
 		$page = $this->CI->db
 						->limit(1)
 						->select("{$key_field}, {$title_field}")
+						->where($where)
 						->get($table)
 						->row();
 						
