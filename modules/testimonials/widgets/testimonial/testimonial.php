@@ -53,12 +53,11 @@ class Widget_Testimonial extends Widgets
             'stream' => 'testimonials',
             'namespace' => 'testimonials',
             'paginate' => 'no',
-            'where' => "featured = 'yes'",
-            'limit' => 5
+            'where' => "featured = '1'",
+            'limit' => $options['limit']
         );
 
         $testimonials = $this->streams->entries->get_entries($params);
-
 		// returns the variables to be used within the widget's view
 		return array('testimonial_widget' => $testimonials);
 	}

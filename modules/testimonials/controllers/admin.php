@@ -30,40 +30,6 @@ class Admin extends Admin_Controller
     // --------------------------------------------------------------------------
 
     /**
-     * List all testimonials
-     *
-     * We are using the Streams API to grab
-     * data from the testimonials database. It handles
-     * pagination as well.
-     *
-     * @access	public
-     * @return	void
-     */
-    public function index()
-    {
-        // The get_entries function in the
-        // entries Streams API drivers grabs
-        // entries from a stream.
-        // The only really required parameters are
-        // stream and namespace.
-
-        $params = array(
-            'stream' => 'testimonials',
-            'namespace' => 'testimonials',
-            'paginate' => 'yes',
-            'page_segment' => 4
-        );
-
-        $this->data->testimonials = $this->streams->entries->get_entries($params);
-
-        // Build the page
-        $this->template->title($this->module_details['name'])
-                ->build('admin/index', $this->data);
-    }
-
-    // --------------------------------------------------------------------------
-
-    /**
      * Alternat list all testimonials
      *
      * In this alternate index, we are using the
@@ -72,7 +38,7 @@ class Admin extends Admin_Controller
      * @access	public
      * @return	void
      */
-    public function _index()
+    public function index()
     {
         $this->load->helper('text');
         $extra['title'] = 'testimonials';
@@ -88,7 +54,7 @@ class Admin extends Admin_Controller
             )
         );
 
-        $this->streams->cp->entries_table('testimonials', 'testimonials', 1, 'admin/testimonials/index', true, $extra);
+        $this->streams->cp->entries_table('testimonials', 'testimonials', 25, 'admin/testimonials/index', true, $extra);
     }
 
     // --------------------------------------------------------------------------
