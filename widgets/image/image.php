@@ -48,23 +48,15 @@ class Widget_Image extends Widgets
 	public function form($options)
 	{
 		// load classes, libs
-		$this->load->library(array('files/files'));
-		$this->load->model(array(
-			'files/file_folders_m',
-			'files/file_m',
-		));
-
+		$this->load->model('files/file_folders_m');
 		// get settings
 		$select_folder = $this->file_folders_m->dropdown('id', 'name');
-
-
 		// option defaults
 		!empty($options['row_class']) OR $options['row_class'] = 'row';
 		!empty($options['col_class']) OR $options['col_class'] = 'col-xs-4';
 		!empty($options['limit']) OR $options['limit'] = '3';
 		!empty($options['captions']) OR $options['captions'] = 'false';
 		!empty($options['folder_id']) OR $options['folder_id'] = null;
-
 		// return the good stuff
 		return array(
 			'options'	=> $options,
@@ -72,17 +64,10 @@ class Widget_Image extends Widgets
 		);
 	}
 
-
 	public function run($options)
 	{
-		// load classes, libs
-		$this->load->model(array(
-			'files/file_folders_m',
-			'files/file_m',
-		));
-
-		$images = $this->file_m->get_many_by('folder_id', $options['folder_id']);
-		// return vars
+		$this->load->model('files/file_m');
+		$images = $this->file_m->order_by('sort')->get_many_by('folder_id', $options['folder_id']);
 		return array(
 			'options'	=> $options,
 			'img_images'	=> $images,

@@ -25,7 +25,6 @@ class Widget_Slider extends Widgets
 	public $version		= '1.0';
 
 	public $fields = array(
-		
 		array(
 			'field' => 'captions',
 			'label' => 'Captions',
@@ -38,23 +37,11 @@ class Widget_Slider extends Widgets
 
 	public function form($options)
 	{
-		// load classes, libs
-		$this->load->library(array('files/files'));
-		$this->load->model(array(
-			'files/file_folders_m',
-			'files/file_m',
-		));
-
-		// get settings
+		$this->load->model('files/file_folders_m');
 		$select_folder = $this->file_folders_m->dropdown('id', 'name');
-
-
-		// option defaults
 		!empty($options['captions']) OR $options['captions'] = 'false';
 		!empty($options['folder_id']) OR $options['folder_id'] = null;
 
-		$this->pyrocache->delete_all('slider_m');
-		// return the good stuff
 		return array(
 			'options'	=> $options,
 			'folder_options'	=> $select_folder,
@@ -64,13 +51,8 @@ class Widget_Slider extends Widgets
 
 	public function run($options)
 	{
-		// load classes, libs
-		$this->load->model(array(
-			'files/file_folders_m',
-			'files/file_m',
-		));
-		$images = $this->file_m->get_many_by('folder_id', $options['folder_id']);
-
+		$this->load->model('files/file_m');
+		$images = $this->file_m->order_by('sort')->get_many_by('folder_id', $options['folder_id']);
 		// return vars
 		return array(
 			'options'	=> $options,
