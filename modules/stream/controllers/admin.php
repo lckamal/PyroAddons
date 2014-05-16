@@ -78,8 +78,8 @@ class Admin extends Admin_Controller
         $params = array(
             'stream' => 'data_streams',
             'namespace' => 'stream',
-            'paginate' => 'no',
-            'page_segment' => 3
+            'paginate' => 'yes',
+            'pag_segment' => 3
         );
 
         $this->data->streams = $this->streams->entries->get_entries($params);
