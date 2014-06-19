@@ -14,16 +14,19 @@ $(function(){
 </script>
     <div class="slider-wrapper theme-{{options.theme}} clearfix">
         <div class="nivoSlider">
-        {{ sliders.entries }}
-            <img 
-                src="{{image.image}}" 
-                alt="{{caption}}" 
-                {{ if options.caption == 'true' }}
-                title="{{caption}}"  
-                {{ endif }}
-                data-thumb="{{image.thumb}}"
-            />
-         {{ /sliders.entries }}
+        {{ if options.captions == 'true' }}
+            {{ sliders.entries }}
+                {{ if link }} <a href="{{link}}" > {{ endif }}
+                <img src="{{image.image}}" alt="{{caption}}" title="{{caption}}" data-thumb="{{image.thumb}}" />
+                {{ if link }} </a> {{ endif }}
+            {{ /sliders.entries }}
+        {{ else }}
+            {{ sliders.entries }}
+                {{ if link }} <a href="{{link}}" > {{ endif }}
+                <img src="{{image.image}}" alt="{{caption}}" data-thumb="{{image.thumb}}" />
+                {{ if link }} </a> {{ endif }}
+            {{ /sliders.entries }}
+        {{ endif }}
         </div>
     </div>
 <div class="clearfix"></div>
