@@ -11,7 +11,7 @@
 				'en' => 'imagepicker'
 			),
 			'description' => array(
-				'en' => 'This is a PyroCMS module template.'
+				'en' => 'This is a module for image picker field type.'
 			),
 			'frontend' => TRUE,
 			'backend' => TRUE
