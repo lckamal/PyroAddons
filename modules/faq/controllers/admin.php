@@ -33,9 +33,6 @@ class Admin extends Admin_Controller
     /**
      * List all FAQs using Streams CP Driver
      *
-     * In this alternate index, we are using the
-     * Streams API driver to 
-     *
      * @access	public
      * @return	void
      */
@@ -62,21 +59,11 @@ class Admin extends Admin_Controller
     /**
      * List all FAQs using Streams Entries Driver and building a custom template
      *
-     * We are using the Streams API to grab
-     * data from the faqs database. It handles
-     * pagination as well.
-     *
      * @access  public
      * @return  void
      */
     public function _index()
     {
-        // The get_entries function in the
-        // entries Streams API drivers grabs
-        // entries from a stream.
-        // The only really required parameters are
-        // stream and namespace.
-
         $params = array(
             'stream' => 'faqs',
             'namespace' => 'faq',
@@ -95,13 +82,6 @@ class Admin extends Admin_Controller
 
     /**
      * Create a new FAQ entry
-     *
-     * This uses the Streams API CP driver which
-     * is designed to handle repetitive CP tasks
-     * down to even loading the page.
-     *
-     * Certain things can be overridden, but this
-     * is an example using almost all default values.
      *
      * @access	public
      * @return	void
@@ -123,13 +103,6 @@ class Admin extends Admin_Controller
     /**
      * Edit a FAQ entry
      *
-     * This uses the Streams API CP driver which
-     * is designed to handle repetitive CP tasks
-     * down to even loading the page.
-     *
-     * Certain things can be overridden, but this
-     * is an example using almost all default values.
-     *
      * @access	public
      * @return	void
      */
@@ -149,9 +122,6 @@ class Admin extends Admin_Controller
 
     /**
      * Delete a FAQ entry
-     * 
-     * This uses the Streams API Entries driver which is
-     * designed to work with entries within a Stream.
      * 
      * @access  public
      * @param   int $id The id of FAQ to be deleted
