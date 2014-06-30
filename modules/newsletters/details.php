@@ -151,8 +151,7 @@ class Module_Newsletters extends Module {
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('newsletter_groups');
         $this->db->query("INSERT INTO `{$prefix}newsletter_groups` (`group_name`, `group_description`, `group_public`) VALUES
-		(1, 'Subscribers', ' E-Newsletter(s) subscribers', 1),
-		(2, 'Trip Updates', 'Holiday availability and trip updates', 1);");
+		('Subscribers', ' E-Newsletter(s) subscribers', 1);");
 		
         $newsletter_recipients = array(
             'id' => array(
