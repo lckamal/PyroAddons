@@ -20,10 +20,6 @@ class Admin_fields extends Admin_Controller {
 
         $this->lang->load('mystream');
 		$this->load->driver('streams');
-
-		// If they cannot administer profile fields,
-		// then they can't access anythere here.
-		//role_or_die('stream', 'admin_profile_fields');
 	}
 
 	// --------------------------------------------------------------------------
@@ -34,19 +30,21 @@ class Admin_fields extends Admin_Controller {
 	 * @access 	public
 	 * @return 	void
 	 */
-	public function index($stream_slug = NULL, $namespace = NULL)
+	public function index($stream_id = 0)
 	{
-		if( is_null($stream_slug) || is_null($namespace))
-		{
+		$mystream = $this->streams->entries->get_entry($stream_id, 'data_streams', 'mystream');
+		if(!$mystream){
 			redirect('admin/mystream');
 		}
+		$stream_slug = $mystream->stream_slug;
+		$namespace = $mystream->stream_namespace;
 		$buttons = array(
 			array(
-				'url'		=> 'admin/mystream/fields/edit/-assign_id-/'.$stream_slug.'/'.$namespace, 
+				'url'		=> 'admin/mystream/fields/edit/-assign_id-/'.$stream_id, 
 				'label'		=> $this->lang->line('global:edit')
 			),
 			array(
-				'url'		=> 'admin/mystream/fields/delete/-assign_id-/'.$stream_slug.'/'.$namespace,
+				'url'		=> 'admin/mystream/fields/delete/-assign_id-/'.$stream_id,
 				'label'		=> $this->lang->line('global:delete'),
 				'confirm'	=> true
 			)
@@ -72,17 +70,19 @@ class Admin_fields extends Admin_Controller {
 	 * @access 	public
 	 * @return 	void
 	 */
-	public function create($stream_slug = NULL, $namespace = NULL)
+	public function create($stream_id = 0)
 	{
-		if( is_null($stream_slug) || is_null($namespace))
-		{
+		$mystream = $this->streams->entries->get_entry($stream_id, 'data_streams', 'mystream');
+		if(!$mystream){
 			redirect('admin/mystream');
 		}
+		$stream_slug = $mystream->stream_slug;
+		$namespace = $mystream->stream_namespace;
 		$extra['title'] 		= lang('streams:new_field');
 		$extra['show_cancel'] 	= true;
-		$extra['cancel_uri'] 	= 'admin/mystream/fields/index/'.$stream_slug.'/'.$namespace;
+		$extra['cancel_uri'] 	= 'admin/mystream/fields/index/'.$stream_id;
 
-		$this->streams->cp->field_form($stream_slug, $namespace, 'new', 'admin/mystream/fields/index/'.$stream_slug.'/'.$namespace, null, array(), true, $extra);
+		$this->streams->cp->field_form($stream_slug, $namespace, 'new', 'admin/mystream/fields/index/'.$stream_id, null, array(), true, $extra);
 	}
 
 	// --------------------------------------------------------------------------
@@ -93,12 +93,15 @@ class Admin_fields extends Admin_Controller {
 	 * @access 	public
 	 * @return 	void
 	 */
-	public function delete($assign_id= 0, $stream_slug = NULL, $namespace = NULL)
+	public function delete($assign_id= 0, $stream_id)
 	{
-		if( is_null($stream_slug) || is_null($namespace))
-		{
+		$mystream = $this->streams->entries->get_entry($stream_id, 'data_streams', 'mystream');
+		if(!$mystream){
 			redirect('admin/mystream');
 		}
+		$stream_slug = $mystream->stream_slug;
+		$namespace = $mystream->stream_namespace;
+
 		if ( ! $assign_id = $this->uri->segment(5))
 		{
 			show_error(lang('streams:cannot_find_assign'));
@@ -114,7 +117,7 @@ class Admin_fields extends Admin_Controller {
 		    $this->session->set_flashdata('success', lang('user:profile_delete_success'));			
 		}
 	
-		redirect('admin/mystream/fields/index/'.$stream_slug.'/'.$namespace);
+		redirect('admin/mystream/fields/index/'.$stream_id);
 	}
 
 	// --------------------------------------------------------------------------
@@ -125,12 +128,14 @@ class Admin_fields extends Admin_Controller {
 	 * @access 	public
 	 * @return 	void
 	 */
-	public function edit($assign_id = 0, $stream_slug = NULL, $namespace = NULL)
+	public function edit($assign_id = 0, $stream_id)
 	{
-		if( is_null($stream_slug) || is_null($namespace))
-		{
+		$mystream = $this->streams->entries->get_entry($stream_id, 'data_streams', 'mystream');
+		if(!$mystream){
 			redirect('admin/mystream');
 		}
+		$stream_slug = $mystream->stream_slug;
+		$namespace = $mystream->stream_namespace;
 		if ( ! $assign_id = $this->uri->segment(5))
 		{
 			show_error(lang('streams:cannot_find_assign'));
@@ -138,8 +143,8 @@ class Admin_fields extends Admin_Controller {
 
 		$extra['title'] 		= lang('streams:edit_field');
 		$extra['show_cancel'] 	= true;
-		$extra['cancel_uri'] 	= 'admin/mystream/fields/index/'.$stream_slug.'/'.$namespace;
+		$extra['cancel_uri'] 	= 'admin/mystream/fields/index/'.$stream_id;
 
-		$this->streams->cp->field_form($stream_slug, $namespace, 'edit', 'admin/mystream/fields/index/'.$stream_slug.'/'.$namespace, $assign_id, array(), true, $extra);
+		$this->streams->cp->field_form($stream_slug, $namespace, 'edit', 'admin/mystream/fields/index/'.$stream_id, $assign_id, array(), true, $extra);
 	}
 }

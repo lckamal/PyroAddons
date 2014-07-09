@@ -33,8 +33,9 @@
 				<td><?php echo $item['stream_prefix']?></td>
                 <td class="actions">
                 	<?php echo anchor('admin/mystream/fields/index/' . $item['stream_slug'] .'/'. $item['stream_namespace'], lang('stream:fields'), array('class'=>'button blue')); ?>
+                	<?php //echo anchor('admin/mystream/view_options/'. $item['id'], lang('stream:view_options'), array('class'=>'button blue')); ?>
                 	<?php echo anchor('admin/mystream/edit/' . $item['id'] . '/' . $item['stream_slug'] .'/'. $item['stream_namespace'], lang('global:edit'), array('class'=>'button blue')); ?>
-					<?php echo anchor('admin/mystream/delete/' . $item['id'] . '/' . $item['stream_slug'] .'/'. $item['stream_namespace'], lang('global:delete'), array('class'=>'confirm button red delete')); ?>
+					<?php echo anchor('admin/mystream/delete/' . $item['id'], lang('global:delete'), array('class'=>'confirm button red delete')); ?>
 						
 				</td>
 			</tr>

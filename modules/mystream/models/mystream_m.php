@@ -7,13 +7,13 @@
  * @package     PyroCMS
  * @subpackage  Countries Module
  */
-class Partner_m extends MY_Model {
+class Mystream_m extends MY_Model {
 
 	public function __construct()
 	{		
 		parent::__construct();
 		
-		$this->_table = 'partners';
+		$this->_table = 'data_streams';
         $this->primary_key = 'id';
 	}
 	
