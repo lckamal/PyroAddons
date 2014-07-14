@@ -2,13 +2,19 @@
 ===========================
 
 ##Modules
+- Calendar
 - Cron
 - FAQ
 - Galleries
-- Imagepicket
-- News
+- Galleries - using streams
+- Imagepicker
+- mystream - Manage various streams and fields with simple GUI (different from pyrocms deafult stream module)
+- News - using streams
 - Newsletter
-- Sliders
+- Sliders - File folder as a slider
+- Sliders - using streams and multiple widgets nivo slider as default
+- Slider - Bootstrap slider
+- Slider - Flex slider
 - Testimonials
 
 ##Field Types
@@ -16,12 +22,14 @@
 - Captcha
 - Decimal
 - File_folders
+- Image crop
 - Imagepicker / filepicker
 - Markdown
 - Multiple
 - Page
 - Pyronav
 - Related
+- Simple captcha
 
 ##Plugins
 - addthis
@@ -29,3 +37,11 @@
 - social
 - tiny
 - uri
+
+##Widgets
+- Image - Display image on website from files module directly
+- Nivo slider - Nivoslider independent from module and dependent on Files module
+- Flex Slider - Slider widget from Files module
+
+##Themes
+- Bootstrap theme
