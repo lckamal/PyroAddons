@@ -50,13 +50,13 @@ class Module_Faq extends Module
 
     public function install()
     {
-        //$this->stream('add');
+        $this->stream('add');
         return true;
     }
 
     public function uninstall()
     {
-        //$this->stream('remove');
+        $this->stream('remove');
 		return true;
     }
 	
