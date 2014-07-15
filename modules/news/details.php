@@ -1,149 +1,308 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Module_News extends Module {
+class Module_News extends Module
+{
 
-	public $version = '1.2';
+    public $version = '1.2';
 
-	public function info()
+    public function info()
+    {
+        return array(
+            'name' => array(
+                'en' => 'News'
+            ),
+            'description' => array(
+                'en' => 'News and events module'
+            ),
+            'frontend' => true,
+            'backend' => true,
+            'menu' => 'site',
+            'sections' => array(
+                'news' => array(
+                    'name' => 'news:newss',
+                    'uri' => 'admin/news',
+                    'shortcuts' => array(
+                        'create' => array(
+                            'name' => 'news:new',
+                            'uri' => 'admin/news/create',
+                            'class' => 'add'
+                        )
+                    )
+                ),
+                'categories' => array(
+                    'name' => 'news:categories',
+                    'uri' => 'admin/news/categories/index',
+                    'shortcuts' => array(
+                        'create' => array(
+                            'name' => 'news:category:new',
+                            'uri' => 'admin/news/categories/create',
+                            'class' => 'add'
+                        )
+                    )
+                ),
+                'newsfile' => array(
+                    'name' => 'newsfile:newsfiles',
+                    'uri' => 'admin/news/newsfile',
+                    'shortcuts' => array(
+                        'create' => array(
+                            'name' => 'newsfile:new',
+                            'uri' => 'admin/news/newsfile/create',
+                            'class' => 'add'
+                        )
+                    )
+                )
+            )
+        );
+    }
+
+    public function install()
+    {
+        $this->stream('add');
+        $this->news_folder('add');
+        $this->newsfiles_stream('add');
+        return true;
+    }
+
+    public function uninstall()
+    {
+        $this->stream('remove');
+        $this->news_folder('remove');
+        $this->newsfiles_stream('remove');
+		return true;
+    }
+	
+    public function upgrade($old_version)
+    {
+        // Your Upgrade Logic
+        return true;
+    }
+	
+	public function stream($action = 'add')
 	{
-		return array(
-			'name' => array(
-				'en' => 'News',
-				'ar' => 'Ø§Ù„Ù…Ø¯ÙˆÙ‘Ù†Ø©',
-				'el' => 'Î™ÏƒÏ„Î¿Î»ÏŒÎ³Î¹Î¿',
-				'br' => 'News',
-				'he' => '×‘×œ×•×’',
-				'lt' => 'Newsas',
-				'ru' => 'Ð‘Ð»Ð¾Ð³'
-			),
-			'description' => array(
-				'en' => 'Post news entries.',
-				'nl' => 'Post nieuwsartikelen en newss op uw site.',
-				'es' => 'Escribe entradas para los artÃ­culos y news (web log).', #update translation
-				'fr' => 'Envoyez de nouveaux posts et messages de news.', #update translation
-				'de' => 'VerÃ¶ffentliche neue Artikel und News-EintrÃ¤ge', #update translation
-				'pl' => 'Postuj nowe artykuÅ‚y oraz wpisy w newsu', #update translation
-				'br' => 'Escrever publicaÃ§Ãµes de news',
-				'zh' => 'ç™¼è¡¨æ–°è�žè¨Šæ�¯ã€�éƒ¨è�½æ ¼æ–‡ç« ã€‚', #update translation
-				'it' => 'Pubblica notizie e post per il news.', #update translation
-				'ru' => 'Ð£Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð·Ð°Ð¿Ð¸Ñ�Ñ�Ð¼Ð¸ Ð±Ð»Ð¾Ð³Ð°.',
-				'ar' => 'Ø£Ù†Ø´Ø± Ø§Ù„Ù…Ù‚Ø§Ù„Ø§Øª Ø¹Ù„Ù‰ Ù…Ø¯ÙˆÙ‘Ù†ØªÙƒ.',
-				'cs' => 'Publikujte novÃ© Ä�lÃ¡nky a pÅ™Ã­spÄ›vky na news.', #update translation
-				'sl' => 'Objavite news prispevke',
-				'fi' => 'Kirjoita uutisartikkeleita tai newsi artikkeleita.', #update translation
-				'el' => 'Î”Î·Î¼Î¹Î¿Ï…Ï�Î³Î®ÏƒÏ„Îµ Î¬Ï�Î¸Ï�Î± ÎºÎ±Î¹ ÎµÎ³Î³Ï�Î±Ï†Î­Ï‚ ÏƒÏ„Î¿ Î¹ÏƒÏ„Î¿Î»ÏŒÎ³Î¹Î¿ ÏƒÎ±Ï‚.',
-				'he' => '× ×™×”×•×œ ×‘×œ×•×’',
-				'lt' => 'RaÅ¡ykite naujienas bei news\'o Ä¯raÅ¡us.',
-				'da' => 'Skriv newsindlÃ¦g'
-			),
-			'frontend'	=> TRUE,
-			'backend'	=> TRUE,
-			'skip_xss'	=> TRUE,
-			'menu'		=> 'content',
-
-			'roles' => array(
-				'put_live', 'edit_live', 'delete_live'
-			),
-			
-			'sections' => array(
-			    'posts' => array(
-				    'name' => 'news_posts_title',
-				    'uri' => 'admin/news',
-				    'shortcuts' => array(
-						array(
-					 	   'name' => 'news_create_title',
-						    'uri' => 'admin/news/create',
-						    'class' => 'add'
-						),
-					),
-				),
-				'categories' => array(
-				    'name' => 'cat_list_title',
-				    'uri' => 'admin/news/categories',
-				    'shortcuts' => array(
-						array(
-						    'name' => 'cat_create_title',
-						    'uri' => 'admin/news/categories/create',
-						    'class' => 'add'
-						),
-				    ),
-			    ),
-		    ),
-		);
-	}
-
-	public function install()
-	{
-		$this->dbforge->drop_table('news_categories');
-		$this->dbforge->drop_table('news');
-
-		$news_categories = "
-			CREATE TABLE " . $this->db->dbprefix('news_categories') . " (
-			  `id` int(11) NOT NULL auto_increment,
-			  `slug` varchar(20) collate utf8_unicode_ci NOT NULL default '',
-			  `title` varchar(20) collate utf8_unicode_ci NOT NULL default '',
-			  PRIMARY KEY  (`id`),
-			  UNIQUE KEY `slug - unique` (`slug`),
-			  UNIQUE KEY `title - unique` (`title`),
-			  KEY `slug - normal` (`slug`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='News Categories.';
-		";
-
-		$news = "
-			CREATE TABLE " . $this->db->dbprefix('news') . " (
-			  `id` int(11) NOT NULL auto_increment,
-			  `title` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-			  `slug` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-			  `category_id` int(11) NOT NULL,
-			  `attachment` varchar(255) collate utf8_unicode_ci NOT NULL default '',
-			  `intro` text collate utf8_unicode_ci NOT NULL,
-			  `body` text collate utf8_unicode_ci NOT NULL,
-			  `parsed` text collate utf8_unicode_ci NOT NULL,
-			  `keywords` varchar(32) NOT NULL default '',
-			  `author_id` int(11) NOT NULL default '0',
-			  `created_on` int(11) NOT NULL,
-			  `updated_on` int(11) NOT NULL default 0,
-              `comments_enabled` INT(1)  NOT NULL default '1',
-			  `status` enum('draft','live') collate utf8_unicode_ci NOT NULL default 'draft',
-			  `type` set('html','markdown','wysiwyg-advanced','wysiwyg-simple') collate utf8_unicode_ci NOT NULL,
-			  PRIMARY KEY  (`id`),
-			  UNIQUE KEY `title` (`title`),
-			  KEY `category_id - normal` (`category_id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='News posts.';
-		";
-
-		if ($this->db->query($news_categories) && $this->db->query($news))
+		if($action == 'add')
 		{
-			return TRUE;
+			$this->load->driver('Streams');
+
+	        $this->load->language('news/news');
+
+	        // Add newss streams
+	        if ( ! $this->streams->streams->add_stream('lang:news:newss', 'newss', 'news', null, null)) return false;
+	        if ( ! $categories_stream_id = $this->streams->streams->add_stream('lang:news:categories', 'categories', 'news', 'news_', null)) return false;
+			
+			//news folder
+	        $this->load->library('files/files');
+        	$this->load->model('files/file_folders_m');
+	        $news_folder =  ($folder = $this->file_folders_m->get_by('slug', 'news-attachments')) ? $folder->id : 0;
+
+	        // Add some fields
+	        $fields = array(
+	            array(
+	                'name' => 'Title',
+	                'slug' => 'news_category_title',
+	                'namespace' => 'news',
+	                'type' => 'text',
+	                'assign' => 'categories',
+	                'title_column' => true,
+	                'required' => true,
+	                'unique' => true
+	            ),
+	            array(
+	                'name' => 'Slug',
+	                'slug' => 'news_category_slug',
+	                'namespace' => 'news',
+	                'type' => 'slug',
+	                'assign' => 'categories',
+	                'extra' => array('slug_field' => 'news_category_title'),
+	                'required' => true,
+	                'unique' => true
+	            ),
+	            array(
+	                'name' => 'Name',
+	                'slug' => 'name',
+	                'namespace' => 'news',
+	                'type' => 'text',
+	                'assign' => 'newss',
+	                'extra' => array('max_length' => 200),
+	                'title_column' => true,
+	                'required' => true,
+	                'unique' => true
+	            ),
+	            array(
+	                'name' => 'Slug',
+	                'slug' => 'slug',
+	                'namespace' => 'news',
+	                'type' => 'slug',
+	                'assign' => 'newss',
+	                'extra' => array('slug_field' => 'name'),
+	                'required' => true
+	            ),
+	            array(
+	                'name' => 'Intro',
+	                'slug' => 'intro',
+	                'namespace' => 'news',
+	                'type' => 'textarea',
+	                'assign' => 'newss',
+	                'required' => true,
+	            ),
+	            array(
+	                'name' => 'Body',
+	                'slug' => 'body',
+	                'namespace' => 'news',
+	                'type' => 'wysiwyg',
+	                'extra' => array('editor_type' => 'advanced'),
+	                'assign' => 'newss',
+	                'required' => true,
+	            ),
+	            array(
+	                'name' => 'Image',
+	                'slug' => 'image',
+	                'namespace' => 'news',
+	                'type' => 'imagepicker',
+	                'extra' => array('img_width' => '100'),
+	                'assign' => 'newss',
+	            ),
+	            array(
+	            	'name' => 'File/attachment',
+	                'slug' => 'file',
+	                'namespace' => 'news',
+	                'type' => 'imagepicker',
+	                'extra' => array('img_width' => '100', 'type' => 'd'),
+	                'assign' => 'newss'
+	            ),
+	            array(
+	                'name' => 'Publish Date',
+	                'slug' => 'publish_date',
+	                'namespace' => 'news',
+	                'type' => 'datetime',
+	                'extra' => array('use_time' => 'no','input_type' => 'datepicker', 'start_date' => '-1M', 'end_date' => '+10M'),
+	                'assign' => 'newss',
+	                'required' => true
+	            ),
+	            array(
+	                'name' => 'Category',
+	                'slug' => 'news_category_id',
+	                'namespace' => 'news',
+	                'type' => 'relationship',
+	                'assign' => 'newss',
+	                'extra' => array('choose_stream' => $categories_stream_id),
+	                'required' => true,
+	            ),
+	            array(
+	                'name' => 'Status',
+	                'slug' => 'status',
+	                'namespace' => 'news',
+	                'type' => 'choice',
+	                'extra' => array('choice_data' => "0 : Draft\n1 : Live", 'choice_type' => 'dropdown', 'default_value' => 1),
+	                'assign' => 'newss',
+	                'required' => true,
+	            )
+	        );
+	
+	        $this->streams->fields->add_fields($fields);
+	
+	        $this->streams->streams->update_stream('newss', 'news', array(
+	            'view_options' => array(
+	                'id',
+	                'name',
+	                'slug',
+	                'publish_date',
+	                'news_category_id',
+	                'status'
+	            )
+	        ));
+	
+	        $this->streams->streams->update_stream('categories', 'news', array(
+	            'view_options' => array(
+	                'id',
+	                'news_category_title'
+	            )
+	        ));
 		}
-	}
-
-	public function uninstall()
-	{
-		//it's a core module, lets keep it around
-		return FALSE;
-	}
-
-	public function upgrade($old_version)
-	{
-		// Your Upgrade Logic
+		else{
+			$this->load->driver('Streams');
+		
+		    $this->streams->utilities->remove_namespace('news');
+		}
 		return TRUE;
 	}
 
-	public function help()
+	public function newsfiles_stream($action = 'add')
 	{
-		/**
-		 * Either return a string containing help info
-		 * return "Some help info";
-		 *
-		 * Or add a language/help_lang.php file and
-		 * return TRUE;
-		 *
-		 * help_lang.php contents
-		 * $lang['help_body'] = "Some help info";
-		*/
+		if($action == 'add')
+		{
+			$this->load->driver('Streams');
+
+	        // Add newsfiles streams
+	        if ( ! $this->streams->streams->add_stream('lang:newsfile:newsfiles', 'newsfiles', 'newsfile', null)) return false;
+	
+	        //result folder
+	        $this->load->library('files/files');
+        	$this->load->model('files/file_folders_m');
+	        $news_folder =  ($folder = $this->file_folders_m->get_by('slug', 'news-attachments')) ? $folder->id : 0;
+	        
+	        // Add some fields
+	        $fields = array(
+	            array(
+	                'name' => 'File',
+	                'slug' => 'newsfile',
+	                'namespace' => 'newsfile',
+	                'type' => 'file',
+	                'extra' => array('folder' => $news_folder),
+	                'assign' => 'newsfiles',
+	                'required' => true
+	            )
+	        );
+	
+	        $this->streams->fields->add_fields($fields);
+	        $this->db->query("ALTER TABLE `".SITE_REF."_newsfiles` CHANGE `created` `created` DATETIME NULL;");
+
+		}
+		else{
+			$this->load->driver('Streams');
+		
+		    $this->streams->utilities->remove_namespace('newsfile');
+		}
 		return TRUE;
 	}
+
+	/**
+     * add or remove result folders.
+     * 
+     * @access public
+     * @param $action add|remove (default: 'add')
+     * @return void
+     */
+    public function news_folder($action = 'add') {
+
+        $this->load->library('files/files');
+        $this->load->model('files/file_folders_m');
+        //$this->load->model('settings/settings_m');
+
+        $slug = 'news-attachments';
+
+        if ($action == 'add') {
+
+        	if( ! $this->file_folders_m->get_by('slug', $slug))
+        	{
+        		$parent_id = 0;
+            	Files::create_folder($parent_id, 'News Attachments', 'local');
+        	}
+            
+            return TRUE;
+        } else {
+
+            $this->file_folders_m->delete_by('slug', $slug);
+
+        }
+
+        return TRUE;
+    }
+
+    public function help()
+    {
+        // Return a string containing help info
+        // You could include a file and return it here.
+        return "No documentation has been added for this module.<br />Contact the module developer for assistance.";
+    }
+
 }
-
-/* End of file details.php */
