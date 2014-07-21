@@ -190,7 +190,7 @@ class Field_imagepicker
 	public function event()
 	{
 		$this->CI->type->add_css('imagepicker', 'imagepicker.css');
-    	$this->CI->type->add_js('imagepicker', 'imagepicker.min.js');
+    	$this->CI->type->add_js('imagepicker', 'imagepicker.js');
 	}
 	
 	
@@ -256,6 +256,11 @@ class Field_imagepicker
 			return $image->description;
 		}
 		return $image->name;
+	}
+
+	public function ajax_myfunction()
+	{
+	    // AJAX functionality here.
 	}
 }
 

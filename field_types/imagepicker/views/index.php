@@ -31,7 +31,6 @@
 			</div>
 
 			<?php if ($showAlignButtons): ?>
-			<!-- image align -->
 			<div id="radio-group">
 				<label for="insert_float"><?php echo lang('imagepicker.label.float'); ?></label>
 				<div class="set">
@@ -70,9 +69,13 @@
 				<tbody>
 					<?php foreach ($current_folder->items as $image): ?>
 					<tr class="<?php echo alternator('', 'alt'); ?>">
-						<td class="image">
+						<td class="<?php echo $image->type == 'i' ? 'image' : '';?>">
 							<div class="selectable">
-								<img class="pyro-image" src="<?php echo base_url(); ?>files/thumb/<?php echo $image->id; ?>/50/50" alt="<?php echo $image->name; ?>" width="50"/>
+								<?php if($image->type == 'i'): ?>
+									<img class="pyro-image" src="<?php echo base_url(); ?>files/thumb/<?php echo $image->id; ?>/50/50" alt="<?php echo $image->name; ?>" width="50"/>
+								<?php else: ?>
+									<div style="cursor:pointer;" title="Click to select file."><?php echo $image->name; ?></div>
+								<?php endif; ?>
 								<span style="visibility: hidden; display: none;"><?php echo $image->id; ?></span>
 								<input id="type" type="hidden" name="type" value="<?php echo $image->type; ?>" />
 								<input id="name" type="hidden" name="name" value="<?php echo $image->name; ?>" />
