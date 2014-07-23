@@ -16,6 +16,10 @@
 			<?php echo form_dropdown('read_more', array('0' => 'No', '1' => 'Yes'), $options['read_more']); ?>
 		</li>
 		<li class="<?php echo alternator('even', ''); ?>">
+			<label for="captions">Layout</label>
+			<?php echo form_dropdown('layout', $layout_options, $options['layout']); ?>
+		</li>
+		<li class="<?php echo alternator('even', ''); ?>">
 			<label for="captions">Row Class</label>
 			<?php echo form_input('row_class', $options['row_class']); ?>
 		</li>

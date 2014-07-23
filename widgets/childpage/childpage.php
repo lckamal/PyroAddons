@@ -28,16 +28,16 @@ class Widget_Childpage extends Widgets
 		array(
 			'field' => 'page_id',
 			'label' => 'Page',
-		),
-		array(
+		),array(
 			'field' => 'limit',
 			'label' => 'Limit',
-		),
-		array(
+		),array(
 			'field' => 'read_more',
 			'label' => 'Read more link.',
-		),
-		array(
+		),array(
+			'field' => 'layout',
+			'label' => 'Layout',
+		),array(
 			'field' => 'row_class',
 			'label' => 'Row Class',
 		),array(
@@ -51,9 +51,11 @@ class Widget_Childpage extends Widgets
 	{
 		class_exists("Page_m") or $this->load->model('pages/page_m');
 		$page_options = $this->_build_tree_select(array('current_parent' => $options['page_id']));
+		$layout_options = array('grid' => 'Bootstrip Grid', 'accordion' => 'Bootstrip Accordion');
 
 		!empty($options['page_id']) OR $options['page_id'] = false;
 		!empty($options['read_more']) OR $options['read_more'] = false;
+		!empty($options['layout']) OR $options['layout'] = 'grid';
 		!empty($options['row_class']) OR $options['row_class'] = 'row';
 		!empty($options['col_class']) OR $options['col_class'] = 'col-xs-4';
 		!empty($options['limit']) OR $options['limit'] = '4';
@@ -62,6 +64,7 @@ class Widget_Childpage extends Widgets
 		return array(
 			'options'	=> $options,
 			'page_options'	=> $page_options,
+			'layout_options'	=> $layout_options,
 		);
 	}
 
@@ -69,7 +72,7 @@ class Widget_Childpage extends Widgets
 	{
 		$this->load->model('pages/page_m');
 		$page = $this->page_m->get($options['page_id']);
-		$pages = $this->page_m->order_by('order')->where('parent_id', $options['page_id'])->dropdown('id', 'title');
+		$pages = $this->page_m->order_by('order')->where('parent_id', $options['page_id'])->limit($options['limit'])->dropdown('id', 'title');
 		$pagedata = null;
 		if($pages){
 			foreach ($pages as $page_id => $page_title) {
