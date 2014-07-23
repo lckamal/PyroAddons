@@ -42,6 +42,7 @@
 - Image - Display image on website from files module directly
 - Nivo slider - Nivoslider independent from module and dependent on Files module
 - Flex Slider - Slider widget from Files module
+- Child Pages - Display child pages as a widget in grid and accordion format
 
 ##Themes
 - Bootstrap theme
