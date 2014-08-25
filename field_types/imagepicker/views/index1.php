@@ -1,7 +1,6 @@
 <div id="upload-box">
 	<h2><?php echo lang('files:upload') ?><span class="close ui-icon ui-icon-closethick"><?php echo lang('buttons:close') ?></span></h2>
 	<?php echo form_open_multipart('admin/wysiwyg/upload') ?>
-	<?php //echo form_open_multipart('admin/imagepicker/upload') ?>
 		<?php echo form_hidden('redirect_to', 'image') ?>
 		<ul>
 			<li>
@@ -21,8 +20,8 @@
 				<?php echo form_textarea('description', set_value('description'), 'id="description"') ?>
 			</li>
 			<li>
-				<?php echo form_submit('button_action', lang('save_label'), 'class="button"') ?>
-				<a href="<?php echo current_url() ?>#" class="button cancel"><?php echo lang('cancel_label') ?></a>
+				<?php echo form_submit('button_action', lang('buttons:save'), 'class="button"') ?>
+				<a href="<?php echo current_url() ?>#" class="btn cancel"><?php echo lang('buttons:cancel') ?></a>
 			</li>
 		</ul>
 	<?php echo form_close() ?>
@@ -42,11 +41,6 @@
 			</li>
 		<?php endif; ?>
 		<?php endforeach; ?>
-		<?php if ($folders): ?>
-			<li class="upload">
-				<?php echo anchor("admin/wysiwyg/files_wysiwyg/upload", lang('files:upload'), 'title="upload"') ?>
-			</li>
-		<?php endif ?>
 		</ul>
 	</div>
 	<div id="files_right_pane">

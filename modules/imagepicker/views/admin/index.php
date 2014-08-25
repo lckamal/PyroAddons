@@ -1,3 +1,31 @@
+<div id="upload-box">
+	<h2><?php echo lang('files:upload') ?><span class="close ui-icon ui-icon-closethick">&#10060;</span></h2>
+	<?php echo form_open_multipart('imagepicker/upload') ?>
+		<?php echo form_hidden('redirect_to', uri_string()) ?>
+		<ul>
+			<li>
+				<label for="name"><?php echo lang('files:name') ?></label>
+				<?php echo form_input('name', set_value('name'), 'id="name"') ?>
+			</li>
+			<li>
+				<label for="file">&nbsp;</label>
+				<?php echo form_upload('userfile', 'id="file"') ?>
+			</li>
+			<li>
+				<label for="folder_id">&nbsp;</label>
+				<?php echo form_dropdown('folder_id', array(0 => lang('files:select_folder')) + $folders_tree, 'id="folder"') ?>
+			</li>
+			<li>
+				<label for="description"><?php echo lang('files:description') ?></label>
+				<?php echo form_textarea('description', set_value('description'), 'id="description"') ?>
+			</li>
+			<li>
+				<?php echo form_submit('button_action', lang('save_label'), 'class="button"') ?>
+				<a href="<?php echo current_url() ?>#" class="button cancel"><?php echo lang('cancel_label') ?></a>
+			</li>
+		</ul>
+	<?php echo form_close() ?>
+</div>
 <div id="imagepicker-box">
 <div id="files_browser">
 	<div id="files_left_pane">
@@ -9,11 +37,19 @@
 				<?php $showAlignButtonsText = $showAlignButtons ? '1' : '0'; ?>
 				<?php $showSizeSliderText = $showSizeSlider ? '1' : '0'; ?>
 				<?php $fileType = $fileType ? $fileType : 'i'; ?>
-				<?php echo anchor("admin/imagepicker/index/{$folder->id}/{$showSizeSliderText}/{$showAlignButtonsText}/{$fileType}", $folder->name, 'title="'.$folder->slug.'"'); ?>
+				<?php echo anchor("admin/imagepicker/index/{$folder->id}/0/0/{$fileType}", $folder->name, 'title="'.$folder->slug.'"'); ?>
 			</li>
 		<?php endif; ?>
 		<?php endforeach; ?>
+		<?php if ($folders): ?>
+			
+		<?php endif ?>
 		</ul>
+        <ul>
+            <li class="upload">
+                <?php echo anchor("imagepicker/upload", lang('files:upload'), 'title="upload" class="open-uploader"') ?>
+            </li>
+        </ul>
 	</div>
 	<div id="files_right_pane">
 		<div id="files-wrapper">
@@ -105,3 +141,39 @@
 	</div>
 </div>
 </div>
+<script type="text/javascript">
+    $(function(){
+        $(".open-uploader").on('click', function(){
+            $("#upload-box").show();
+
+            return false;
+        });
+
+        $(".close, .cancel").on('click', function(){
+            $("#upload-box").hide();
+            return false;
+        });
+
+        $(".selectable").on('click', function(){
+            var file_id = $(this).find('span').text();
+            //parent.$("#preview_source_logo").html("Some Updated Text");
+            var alignment = $('input[name=insert_float]:checked').val() || 'none';
+            var size = $('#insert_width').val() || 0;
+            var type = $(this).find('input#type').val();
+            var name = $(this).find('input#name').val();
+            var imageId = 0;
+            $(this).children('span').each(function () {
+                imageId = $(this).text();
+            });
+
+            parent.ImagePicker.close({
+                imageId: imageId,
+                size : size,
+                alignment : alignment,
+                type : type,
+                name : name
+            });
+            return false;
+        });
+    });
+</script>

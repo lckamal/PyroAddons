@@ -7,16 +7,6 @@ class Admin extends Admin_Controller
 	public function __construct() {
 		// Call the parent constructor.
 		parent::__construct();
-
-		// If the request wasn't a ajax request we don't serve....
-		if (!$this->input->is_ajax_request()) {
-			// Todo: Handle this properly...
-			die('Ajax requests only...');
-		}
-
-		// Since we only serve ajax calls we don't want to use a layout.
-		$this->template->set_layout(FALSE);
-
 		$this->load->model('files/file_folders_m');
 		$this->load->model('files/file_m');
 		$this->lang->load('files/files');
@@ -25,6 +15,11 @@ class Admin extends Admin_Controller
 	}
 		
 	public function index($id = 0, $showSizeSlider = 1, $showAlignButtons = 1, $fileType = 'i') {
+		// if (!$this->input->is_ajax_request()) {
+		// 	die('Ajax requests only...');
+		// }
+		//$this->template->set_layout(FALSE);
+
 		$data = new stdClass;
 		$data->showSizeSlider	= $showSizeSlider;
 		$data->showAlignButtons	= $showAlignButtons;
@@ -62,6 +57,58 @@ class Admin extends Admin_Controller
 		}
 
 		$this->template
+			->set_layout('modal')
+            //->append_js('jquery/jquery.1.11.js')
+			->append_js('module::imagepicker.js')
+			->append_css('module::admin.css')
 			->build('admin/index', $data);
+	}
+
+	public function fileupload()
+	{
+		$this->load->library('form_validation');
+
+		$rules = array(
+			array(
+				'field'   => 'name',
+				'label'   => 'lang:files:name',
+				'rules'   => 'trim'
+			),
+			array(
+				'field'   => 'description',
+				'label'   => 'lang:files:description',
+				'rules'   => ''
+			),
+			array(
+				'field'   => 'folder_id',
+				'label'   => 'lang:files:folder',
+				'rules'   => 'required'
+			),
+		);
+
+		$this->form_validation->set_rules($rules);
+
+		if ($this->form_validation->run())
+		{
+			$input = $this->input->post();
+
+			$results = Files::upload($input['folder_id'], $input['name'], 'userfile');
+
+			// if the upload was successful then we'll add the description too
+			if ($results['status'])
+			{
+				$data = $results['data'];
+				$this->file_m->update($data['id'], array('description' => $input['description']));
+			}
+
+			// upload has a message to share... good or bad?
+			$this->session->set_flashdata($results['status'] ? 'success' : 'notice', $results['message']);
+		}
+		else
+		{
+			$this->session->set_flashdata('error', validation_errors());
+		}
+
+		//redirect("admin/imagepicker/{$this->input->post('redirect_to')}/upload/{$this->input->post('folder_id')}");
 	}
 }
