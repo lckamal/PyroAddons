@@ -94,7 +94,10 @@ class Field_decimal
 	 */
 	public function param_decimal_places( $value = 0 )
 	{
-		return form_input('decimal_places', $value);
+		return array(
+			'input' 		=> form_input('decimal_places', $value),
+			'instructions'	=> $this->CI->lang->line('decimal.decimal_places_instruction')
+		);
 	}
 
 	/**
@@ -104,7 +107,10 @@ class Field_decimal
 	 */
 	public function param_min_value( $value = null )
 	{
-		return form_input('min_value', $value);
+		return array(
+			'input' 		=> form_input('min_value', $value),
+			'instructions'	=> $this->CI->lang->line('decimal.min_value_instruction')
+		);
 	}
 
 	/**
@@ -114,7 +120,10 @@ class Field_decimal
 	 */
 	public function param_max_value( $value = null )
 	{
-		return form_input('max_value', $value);
+		return array(
+			'input' 		=> form_input('max_value', $value),
+			'instructions'	=> $this->CI->lang->line('decimal.max_value_instruction')
+		);
 	}
 
 	// --------------------------------------------------------------------------

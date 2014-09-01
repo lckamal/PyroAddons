@@ -1,6 +1,6 @@
 <div id="upload-box">
-	<h2><?php echo lang('files:upload') ?><span class="close ui-icon ui-icon-closethick">&#10060;</span></h2>
-	<?php echo form_open_multipart('imagepicker/upload') ?>
+	<h3><?php echo lang('files:upload') ?><span class="close ui-icon ui-icon-closethick">&#10060;</span></h3>
+    <?php echo form_open_multipart('imagepicker/upload') ?>
 		<?php echo form_hidden('redirect_to', uri_string()) ?>
 		<ul>
 			<li>
@@ -12,7 +12,7 @@
 				<?php echo form_upload('userfile', 'id="file"') ?>
 			</li>
 			<li>
-				<label for="folder_id">&nbsp;</label>
+				<label for="folder_id"><?php echo lang('files:folder') ?></label>
 				<?php echo form_dropdown('folder_id', array(0 => lang('files:select_folder')) + $folders_tree, 'id="folder"') ?>
 			</li>
 			<li>
@@ -20,6 +20,7 @@
 				<?php echo form_textarea('description', set_value('description'), 'id="description"') ?>
 			</li>
 			<li>
+                <label for="file">&nbsp;</label>
 				<?php echo form_submit('button_action', lang('save_label'), 'class="button"') ?>
 				<a href="<?php echo current_url() ?>#" class="button cancel"><?php echo lang('cancel_label') ?></a>
 			</li>
@@ -29,15 +30,13 @@
 <div id="imagepicker-box">
 <div id="files_browser">
 	<div id="files_left_pane">
-		<h3><?php echo lang('file_folders.folders_label'); ?></h3>
+		<h3><?php echo lang('files:folders'); ?></h3>
 		<ul id="files-nav">
 		<?php foreach ($folders as $folder): ?>
 		<?php if ( ! $folder->parent_id): ?>
 			<li id="folder-id-<?php echo $folder->id; ?>" class="<?php echo $current_folder && $current_folder->id == $folder->id ? 'current' : ''; ?>">
-				<?php $showAlignButtonsText = $showAlignButtons ? '1' : '0'; ?>
-				<?php $showSizeSliderText = $showSizeSlider ? '1' : '0'; ?>
 				<?php $fileType = $fileType ? $fileType : 'i'; ?>
-				<?php echo anchor("admin/imagepicker/index/{$folder->id}/0/0/{$fileType}", $folder->name, 'title="'.$folder->slug.'"'); ?>
+				<?php echo anchor("admin/imagepicker/index/{$folder->id}/{$fileType}", $folder->name, 'title="'.$folder->slug.'"'); ?>
 			</li>
 		<?php endif; ?>
 		<?php endforeach; ?>
@@ -54,50 +53,19 @@
 	<div id="files_right_pane">
 		<div id="files-wrapper">
 		<?php if ($current_folder): ?>
-			<h3><?php echo $current_folder->name; ?></h3>
-			<!-- subfolders -->
-			<div id="files_toolbar">
-				<ul>
-					<li>
-						<label for="folder"><?php echo lang('files:subfolders'); ?>:
-							<?php echo form_dropdown('parent_id', $subfolders, $current_folder->id, 'id="parent_id" title="image"'); ?>
-						</label>
-					</li>
-				</ul>
-			</div>
-
-			<?php if ($showAlignButtons): ?>
-			<!-- image align -->
-			<div id="radio-group">
-				<label for="insert_float"><?php echo lang('imagepicker.label.float'); ?></label>
-				<div class="set">
-					<input id="radio_left" type="radio" name="insert_float" value="left" />
-					<label for="radio_left"><?php echo lang('imagepicker.label.left'); ?></label>
-					<input id="radio_right" type="radio" name="insert_float" value="right" />
-					<label for="radio_right"><?php echo lang('imagepicker.label.right'); ?></label>
-					<input id="radio_none" type="radio" name="insert_float" value="none" checked="checked" />
-					<label for="radio_none"><?php echo lang('imagepicker.label.none'); ?></label>
-				</div>
-			</div>
-			<?php endif; ?>
-
-			<?php if ($showSizeSlider): ?>
-			<!-- image size -->
-			<div id="options-bar">
-				<label for="insert_width"><?php echo lang('imagepicker.label.insert_width'); ?></label>
-				<input id="insert_width" type="text" name="insert_width" value="200" />
-			</div>
-			<div id="slider"></div>
-			<?php endif; ?>
-
+            <div class="files-header">
+			<h3 class="folder-title"><?php echo $current_folder->name; ?></h3>
+            <label class="subfolder-select" for="folder"><?php echo lang('files:subfolders'); ?>:
+                <?php echo form_dropdown('parent_id', $subfolders, in_array($current_folder->id) ? $current_folder->id : '', 'id="parent_id" title="image"'); ?>
+            </label>
+            </div>
 			<!-- folder contents -->
 			<?php  if ($current_folder->items): ?>
 			<table class="table-list" border="0">
 				<thead>
 					<tr>
-						<th><?php echo lang('files.type_i'); ?></th>
-						<th><?php echo lang('files.name_label') . '/' . lang('files.description_label'); ?></th>
-						<th><?php echo lang('files.filename_label') . '/' . lang('file_folders.created_label'); ?></th>
+						<th><?php echo lang('files:type_i'); ?></th>
+						<th><?php echo lang('files:name') . '/' . lang('files:description'); ?></th>
 						<th><?php echo lang('imagepicker.meta.width'); ?></th>
 						<th><?php echo lang('imagepicker.meta.height'); ?></th>
 						<th><?php echo lang('imagepicker.meta.size'); ?></th>
@@ -117,10 +85,6 @@
 						<td class="name-description">
 							<p><?php echo $image->name; ?><p>
 							<p><?php echo $image->description; ?></p>
-						</td>
-						<td class="filename">
-							<p><?php echo $image->filename; ?></p>
-							<p><?php echo format_date($image->date_added); ?></p>
 						</td>
 						<td class="meta width"><?php echo $image->width; ?></td>
 						<td class="meta height"><?php echo $image->height; ?></td>
@@ -143,18 +107,18 @@
 </div>
 <script type="text/javascript">
     $(function(){
-        $(".open-uploader").on('click', function(){
+        $(".open-uploader").live('click', function(){
             $("#upload-box").show();
 
             return false;
         });
 
-        $(".close, .cancel").on('click', function(){
+        $(".close, .cancel").live('click', function(){
             $("#upload-box").hide();
             return false;
         });
 
-        $(".selectable").on('click', function(){
+        $(".selectable").live('click', function(){
             var file_id = $(this).find('span').text();
             //parent.$("#preview_source_logo").html("Some Updated Text");
             var alignment = $('input[name=insert_float]:checked').val() || 'none';
@@ -175,5 +139,49 @@
             });
             return false;
         });
+
+        $('select#parent_id').live('change', function() {
+            var folder_id = $(this).val();
+            var controller = $(this).attr('title');
+            var href_val = SITE_URL + 'admin/imagepicker/index/' + folder_id + '/' + (parent.ImagePicker.options.fileType ? parent.ImagePicker.options.fileType : 'i');
+            $('#files_right_pane').load(href_val + ' #files-wrapper', function() {
+                $(this).children().fadeIn('slow');
+                var class_exists = $('#folder-id-' + folder_id).html();
+                $( 'div.notification' ).fadeOut('fast');
+                if(class_exists !== null) {   
+                    $('#files-nav li').removeClass('current');
+                    $('li#folder-id-'+folder_id).addClass('current');
+                }
+            });
+        });
+
+        $('#files-nav li a').on('click', function(e) {
+            e.preventDefault();
+            var href_val = $(this).attr('href');
+
+            //remove existing 'current' classes
+            $('#files-nav li').removeClass('current');
+
+            //add class to click anchor parent
+            $(this).parent('li').addClass('current');
+            //remove any notifications
+            $( 'div.notification' ).fadeOut('fast');
+            if ($(this).attr('title') != 'upload') {
+                $('#files_right_pane').load(href_val + ' #files-wrapper', function() {
+                    $(this).children().fadeIn('slow');
+                });
+            } else {
+                var box = $('#upload-box');
+                if (box.is( ":visible" )) {
+                    // Hide - slide up.
+                    box.fadeOut( 800 );
+                } else {
+                    // Show - slide down.
+                    box.fadeIn( 800 );
+                }
+            }
+        });
+        //auto hide alert
+        $(".alert.fadeIn").delay(5000).hide(0);
     });
 </script>

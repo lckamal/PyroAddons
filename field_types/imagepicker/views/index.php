@@ -38,7 +38,7 @@
 				<?php $showAlignButtonsText = $showAlignButtons ? '1' : '0'; ?>
 				<?php $showSizeSliderText = $showSizeSlider ? '1' : '0'; ?>
 				<?php $fileType = $fileType ? $fileType : 'i'; ?>
-				<?php echo anchor("streams_core/public_ajax/field/imagepicker/viewpicker/{$folder->id}/0/0/{$fileType}", $folder->name, 'title="'.$folder->slug.'"'); ?>
+				<?php echo anchor("streams_core/public_ajax/field/imagepicker/viewpicker/{$folder->id}/{$fileType}", $folder->name, 'title="'.$folder->slug.'"'); ?>
 			</li>
 		<?php endif; ?>
 		<?php endforeach; ?>

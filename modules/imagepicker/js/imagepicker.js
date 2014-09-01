@@ -15,7 +15,7 @@
 		onPickCallback					: function() {},
 		fileType						: 'i',
 	};
-
+	ImagePicker.options = options;
 	/**
 	 * Opens a colorbox dialog and opens the url to the imagepicker.
 	 *
@@ -25,7 +25,7 @@
 		// Extend the options object with the provided options.
 		$.extend(options, opts);
 
-		var urlToOpen = INITIAL_IMAGEPICKER_URL + '/' + (options.showSizeSlider ? '1' : '0') + '/' + (options.showAlignButtons ? '1' : '0') + '/' + (options.fileType ? options.fileType : 'i');;
+		var urlToOpen = INITIAL_IMAGEPICKER_URL + '/' + (options.fileType ? options.fileType : 'i');
 
 		// Open a colorbox dialog.
 		$.colorbox({
@@ -53,25 +53,3 @@
 	};
 
 }(window.ImagePicker = window.ImagePicker || {}, jQuery));
-
-$(".selectable").on('click', function(){
-    var file_id = $(this).find('span').text();
-    //parent.$("#preview_source_logo").html("Some Updated Text");
-    var alignment = $('input[name=insert_float]:checked').val() || 'none';
-    var size = $('#insert_width').val() || 0;
-    var type = $(this).find('input#type').val();
-    var name = $(this).find('input#name').val();
-    var imageId = 0;
-    $(this).children('span').each(function () {
-        imageId = $(this).text();
-    });
-
-    ImagePicker.close({
-        imageId: imageId,
-        size : size,
-        alignment : alignment,
-        type : type,
-        name : name
-    });
-    return false;
-});

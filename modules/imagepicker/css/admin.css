@@ -1,39 +1,23 @@
-h3 span {
-	font-size: 14px;
-	padding-left: 10px;
+.files-header{
+	clear:both;
+	border-bottom: 1px solid #eee;
+	height:30px;
+	margin-bottom:10px;
+}
+h3.folder-title{
+	float:left;
+}
+.subfolder-select{
+	float:right;
 }
 select {
     width: 20em;
+    padding:3px;
 }
 input#insert_width {
     border: 0;
     font-weight: bold;
     font-size: 14px;
-}
-#options-bar {
-    float: left;
-}
-#options-bar, #radio-group {
-    margin-bottom: 10px;
-}
-#radio-group {
-    float: right;
-	display: none;
-}
-#radio-group > label {
-	display: inline-block;
-	font-weight: bold;
-	font-size: 110%;
-	text-align: right;
-	padding-right: 10px;
-}
-#radio-group > .set {
-	display: inline-block;
-}
-#slider {
-    margin: 0 0 10px 0;
-    clear: both;
-	display: none;
 }
 #files_browser {
 	display: table;
@@ -49,6 +33,7 @@ input#insert_width {
 }
 #files_left_pane {
 	width: 20%;
+	min-width:150px;
 	display: table-cell;
 	border-right: 1px solid #CCCCCC;
 	padding: 10px 0;
@@ -81,7 +66,7 @@ input#insert_width {
 /*	display: none;*/
 }
 #files_left_pane li a {
-	padding: 10px;
+	padding: 7px 10px;
 	background: transparent;
 	display: block;
 	text-decoration: none;
@@ -92,10 +77,12 @@ input#insert_width {
 	color: #333333;
 }
 #files_left_pane li.current a {
-	background-color: #3a4043;
-	color: #FFFFFF;
+	background-color: #ddd;
+	color: #333333;
 }
 #files_left_pane li.upload a {
+	border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
 	font-weight: bold;
 	margin-top: 10px;
 }
@@ -112,7 +99,7 @@ input#insert_width {
 /** Tables **/
 table {
 	width: 100%;
-	border-collapse: separate;
+	border-collapse: collapse;
 }
 table th,
 table td {
@@ -150,13 +137,13 @@ td.meta {
     text-align: center;
 }
 #upload-box {
-	background-color: #ffffff;
-	border: 2px solid #c2c2c2;
+	background-color: #F2F2F2;
+	border: 1px solid #c2c2c2;
 	display: none;
 	position: absolute;
 	top: 0;
-	left: 7px;
-	width: 96%;
+	left: 5px;
+	width: 98%;
 	padding: 8px;
 	z-index: 99;
 	-webkit-border-radius: 8px;
@@ -175,14 +162,21 @@ td.meta {
 }
 #upload-box form textarea {
 	height: 70px;
-	width: 300px;
+	min-width: 300px;
 }
-#upload-box form textarea {
-	width:300px;
-	padding:5px;
+#upload-box form input[type="text"],
+#upload-box form select {
+	min-width: 300px;
+	padding:3px;
 }
-#upload-box h2 span {
+#upload-box h3{
+	margin:0;
+	padding:7px;
+	border-bottom:1px solid #ddd;
+}
+#upload-box h3 span {
 	float: right;
+	font-size: 16px;
 }
 span.close {
 	cursor: pointer;
@@ -230,22 +224,6 @@ input[type="button"] {
 
 a.button {
   padding-top: 2px;
-}
-
-.cancel {
-  padding: 3px 10px 4px;
-}
-input[type="text"],
-input[type="password"],
-textarea {
-  width: 30%;
-  min-width:300px;
-  padding: 5px 5px;
-  margin-bottom: 5px;
-  background: #eee;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 2px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset;
 }
 
 input[type="file"] {

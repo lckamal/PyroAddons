@@ -14,7 +14,7 @@ class Admin extends Admin_Controller
 
 	}
 		
-	public function index($id = 0, $showSizeSlider = 1, $showAlignButtons = 1, $fileType = 'i') {
+	public function index($id = 0, $fileType = 'i') {
 		// if (!$this->input->is_ajax_request()) {
 		// 	die('Ajax requests only...');
 		// }
