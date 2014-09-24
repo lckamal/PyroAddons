@@ -1,7 +1,7 @@
 <div id="upload-box">
 	<h3><?php echo lang('files:upload') ?><span class="close ui-icon ui-icon-closethick">&#10060;</span></h3>
     <?php echo form_open_multipart('imagepicker/upload') ?>
-		<?php echo form_hidden('redirect_to', uri_string()) ?>
+		<?php //echo form_hidden('redirect_to', uri_string()) ?>
 		<ul>
 			<li>
 				<label for="name"><?php echo lang('files:name') ?></label>

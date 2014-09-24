@@ -3,8 +3,8 @@
 (function(ImagePicker, $, undefined) {
 
  	// Define some default properties.
- 	var DEFAULT_COLORBOX_WIDTH			= 1200,
-		DEFAULT_COLORBOX_HEIGHT			= 650,
+ 	var DEFAULT_COLORBOX_WIDTH			= '95%',
+		DEFAULT_COLORBOX_HEIGHT			= '90%',
 		//INITIAL_IMAGEPICKER_URL			= 'streams_core/public_ajax/field/imagepicker/viewpicker/0';
 		INITIAL_IMAGEPICKER_URL			= 'admin/imagepicker/index/0';
 

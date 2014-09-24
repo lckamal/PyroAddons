@@ -41,9 +41,9 @@ class Upload extends Admin_Controller
 
 		$this->form_validation->set_rules($rules);
 
+		$input = $this->input->post();
 		if ($this->form_validation->run())
 		{
-			$input = $this->input->post();
 
 			$results = Files::upload($input['folder_id'], $input['name'], 'userfile');
 
@@ -61,7 +61,7 @@ class Upload extends Admin_Controller
 		{
 			$this->session->set_flashdata('error', validation_errors());
 		}
-        $redirect_to = $this->input->post('redirect_to') ? $this->input->post('redirect_to') : 'admin/imagepicker/index';
+        $redirect_to = $this->input->post('redirect_to') ? $this->input->post('redirect_to') : 'admin/imagepicker/index/'.$input['folder_id'];
 		redirect($redirect_to);
 	}
 
