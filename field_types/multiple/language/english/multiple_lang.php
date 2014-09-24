@@ -4,5 +4,7 @@ $lang['streams:multiple.name'] 			= 'Multiple Relationships';
 $lang['streams:multiple.choose_stream'] = 'Relationship Stream';
 $lang['streams:multiple.choose_ui']     = 'Choose UI';
 $lang['streams:multiple.drag_drop']     = 'Drag/Drop';
+$lang['streams:multiple.where']     	= 'MySQL Where';
+$lang['streams:multiple.where_instruction'] = 'Add extra where query to the related table. eg. table.lang = \'en\'';
 $lang['streams:multiple.multiselect']   = 'Multiselect';
 $lang['streams:multiple.no_change']     = 'You cannot change a multiple relationship field stream once it has been assigned.';

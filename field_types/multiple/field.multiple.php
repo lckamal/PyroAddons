@@ -52,7 +52,7 @@ if ( ! class_exists('Field_multiple')) {
          *
          * @var 	array
          */
-        public $custom_parameters		= array('choose_stream', 'choose_ui');
+        public $custom_parameters		= array('choose_stream', 'choose_ui', 'where');
 
         /**
          * Version Number
@@ -415,9 +415,11 @@ if ( ! class_exists('Field_multiple')) {
             foreach ($skips as $skip) {
                 $this->CI->db->where('id != ', $skip);
             }
-
+            //add where query
+            if(isset($data['custom']['where']) && strlen($data['custom']['where']) > 3){
+                $this->CI->db->where($data['custom']['where']);
+            }
             $obj = $this->CI->db->get($stream->stream_prefix.$stream->stream_slug);
-
             foreach ($obj->result() as $row) {
                 // Need to replace with title column
                 $form_data['choices'][$row->id] = $row->$title_column;
@@ -489,6 +491,19 @@ if ( ! class_exists('Field_multiple')) {
             }
 
             return form_dropdown('choose_stream', $choices, $stream_id, $extra);
+        }
+
+        /**
+         * Title field to select
+         *
+         * @return  string
+         */
+        public function param_where( $value = null )
+        {
+            return array(
+                'input'         => form_input('where', $value),
+                'instructions'  => $this->CI->lang->line('streams:multiple.where_instruction')
+            );
         }
     }
 }
