@@ -68,7 +68,8 @@ class Field_related
 		$title_field = isset($field->field_data['title_field']) ? $field->field_data['title_field'] : 'title';
 		$where = isset($field->field_data['where']) && !empty($field->field_data['where']) ? $field->field_data['where'] : array();
 		$selected = $data['value'];
-		if ($pages = $this->CI->db->where($where)->select("$table.$key_field, $table.$title_field")->get($table)->result())
+
+		if ($pages = ci()->db->where($where)->select("$table.$key_field, $table.$title_field")->get($table)->result())
 		{
 
 			foreach($pages as $page)
@@ -76,7 +77,7 @@ class Field_related
 				$html .= '<option value="' . $page->$key_field . '"';
 				$html .= $selected == $page->$key_field ? ' selected="selected">': '>';
 				$html .= $page->$title_field . '</option>';
-				//$dropdown[$page->$key_field] = $page->$title_field;
+				$dropdown[$page->$key_field] = $page->$title_field;
 			}
 		}
 
@@ -102,9 +103,9 @@ class Field_related
 	{
 		if ( ! $input or ! is_numeric($input)) return null;
 
-		$table = $field['field_data']['table'];
-		$key_field = isset($field['field_data']['key_field']) ? $field['field_data']['key_field'] : 'id';
-		$title_field = isset($field['field_data']['title_field']) ? $field['field_data']['title_field'] : 'title';
+		$table = isset($field['table']) ? $field['table'] : $field['field_data']['table'];
+		$key_field = isset($field['field_data']['key_field']) ? $field['field_data']['key_field'] : (isset($field['key_field']) ? $field['key_field'] : 'id');
+		$title_field = isset($field['field_data']['title_field']) ? $field['field_data']['title_field'] : (isset($field['title_field']) ? $field['title_field'] : 'title');
 		$where = array($key_field => $input);
 
 		// Get the page
@@ -113,10 +114,9 @@ class Field_related
 						->select("{$key_field}, {$title_field}")
 						->where($where)
 						->get($table)
-						->row();
-						
+						->row();			
 		if ( ! $page) return null;
-				
+
 		return $page->$title_field;
 	}
 
@@ -130,26 +130,25 @@ class Field_related
 	 * @param	array
 	 * @return	array
 	 */
-	public function pre_output_plugin($input, $params, $field)
+	public function pre_output_plugin($input, $field, $params)
 	{
 		if ( ! $input or ! is_numeric($input)) return null;
 		
-		$table = $params['field_data']['table'];
-		$key_field = isset($params['field_data']['key_field']) ? $params['field_data']['key_field'] : 'id';
-		$title_field = isset($params['field_data']['title_field']) ? $params['field_data']['title_field'] : 'title';
-		$where = isset($params['field_data']['where']) ? $params['field_data']['where'] : array();
+		// $table = $field['field_data']['table'];
+		// $key_field = isset($params['field_data']['key_field']) ? $params['field_data']['key_field'] : 'id';
+		// $title_field = isset($params['field_data']['title_field']) ? $params['field_data']['title_field'] : 'title';
+		// $where = isset($params['field_data']['where']) ? $params['field_data']['where'] : array();
 
-		// Get the page
-		$page = $this->CI->db
-						->limit(1)
-						->select('*')
-						->where($key_field, $input)
-						->get($table)
-						->row();
-
-		if ( ! $page) return null;
+		// // Get the page
+		// $page = $this->CI->db
+		// 				->limit(1)
+		// 				->select('*')
+		// 				->where($key_field, $input)
+		// 				->get($table)
+		// 				->row();
+		// if ( ! $page) return null;
 		
-		return $page;	
+		// return $page;	
 	}
 
 	/**
