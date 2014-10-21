@@ -12,7 +12,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @link		http://parse19.com/pyrostreams
  */
 class Field_captcha {
-
+    /**
+     * Required variables
+     */
+    public $field_type_name = 'Captcha';
     public $field_type_slug = 'captcha';
     public $db_col_type = 'varchar';
     public $version = '1.0';
@@ -51,37 +54,15 @@ class Field_captcha {
      * @return	string
      */
     public function form_output($data) {
-        $this->CI->load->helper('captcha');
-        
         $options['name'] = $data['form_slug'];
         $options['id'] = $data['form_slug'];
         $options['value'] = $data['value'];
 
-        $config = array(
-            'img_path' => $this->captcha_dir,
-            'img_url' => site_url() . 'assets/captcha/',
-            'img_width' => '150',
-            'img_height' => 30,
-            'expiration' => 7200
-        );
+        //add related js and css
+        $this->CI->type->add_js('captcha', 'captcha.js');
+        $cap = $this->_create_captcha($data);
 
-        if (isset($data['img_width']) and is_numeric($data['img_width'])) {
-            $config['img_width'] = $data['max_length'];
-        }
-        if (isset($data['img_height']) and is_numeric($data['img_height'])) {
-            $config['img_height'] = $data['img_height'];
-        }
-        $cap = create_captcha($config);
-
-        $insert = array(
-            'captcha_time' => $cap['time'],
-            'ip_address' => $this->CI->input->ip_address(),
-            'word' => $cap['word']
-        );
-
-        $this->CI->db->insert('captcha', $insert);
-
-        return '<div id="captcha">' . $cap['image'] . '</div>' . form_input($options);
+        return '<div class="captcha" id="captcha-'.$data['form_slug'].'">' . $cap['image'] . '<button class="reload-captcha" data-form_slug="'.$data['form_slug'].'">Reload</button></div>' . form_input($options);
     }
 
     public function validate($value, $mode, $field) {
@@ -111,13 +92,54 @@ class Field_captcha {
     }
 
     public function param_img_width($value = null) {
-
-        return form_input('img_width', $value);
+        return array(
+            'input'         => form_input('img_width', $value),
+            'instructions'  => $this->CI->lang->line('streams.captcha.img_width')
+        );
     }
     
     public function param_img_height($value = null) {
+        return array(
+            'input'         => form_input('img_height', $value),
+            'instructions'  => $this->CI->lang->line('streams.captcha.img_height')
+        );
+    }
 
-        return form_input('img_height', $value);
+    public function _create_captcha($data = array())
+    {
+        $this->CI->load->helper('captcha');
+
+        $config = array(
+            'img_path' => $this->captcha_dir,
+            'img_url' => site_url() . 'assets/captcha/',
+            'img_width' => '150',
+            'img_height' => 30,
+            'expiration' => 7200
+        );
+
+        if (isset($data['img_width']) and is_numeric($data['img_width'])) {
+            $config['img_width'] = $data['max_length'];
+        }
+        if (isset($data['img_height']) and is_numeric($data['img_height'])) {
+            $config['img_height'] = $data['img_height'];
+        }
+        $cap = create_captcha($config);
+
+        $insert = array(
+            'captcha_time' => $cap['time'],
+            'ip_address' => $this->CI->input->ip_address(),
+            'word' => $cap['word']
+        );
+
+        $this->CI->db->insert('captcha', $insert);
+        return $cap;
+    }
+
+    public function ajax_captcha()
+    {
+        $data = $this->CI->input->post();
+        $cap = $this->_create_captcha($data);
+        echo $cap['image'];
     }
 
 }
