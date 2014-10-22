@@ -16,7 +16,7 @@ class Module_Faq extends Module
             ),
             'frontend' => true,
             'backend' => true,
-            'menu' => 'access',
+            'menu' => 'content',
             'sections' => array(
                 'faq' => array(
                     'name' => 'faq:faqs',

@@ -62,10 +62,12 @@ class Field_captcha {
         $this->CI->type->add_js('captcha', 'captcha.js');
         $cap = $this->_create_captcha($data);
 
-        return '<div class="captcha" id="captcha-'.$data['form_slug'].'">' . $cap['image'] . '<button class="reload-captcha" data-form_slug="'.$data['form_slug'].'">Reload</button></div>' . form_input($options);
+        return '<div class="captcha" id="captcha-'.$data['form_slug'].'">' . $cap['image'] . '<button class="reload-captcha btn btn-default btn-b" data-form_slug="'.$data['form_slug'].'">
+    <i class="fa fa-refresh"></i> </button>
+    </div>' . form_input($options);
     }
 
-    public function validate($value, $mode, $field) {
+    public function validate($value, $mode = null, $field = null) {
         // Up front, let's determine if this 
         // a required field.
         $db_name = $this->CI->db->dbprefix('captcha');
@@ -142,4 +144,18 @@ class Field_captcha {
         echo $cap['image'];
     }
 
+    public function ajax_validate($fild_slug = '')
+    {
+        $field = $_GET['field'];
+        $value = $_GET[$field];
+        $valid = $this->validate($value);
+        if($valid !== true)
+        {
+            $valid = false;
+        }
+
+        echo json_encode(array(
+            'valid' => $valid,
+        ));
+    }
 }

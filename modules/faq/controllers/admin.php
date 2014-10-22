@@ -39,6 +39,7 @@ class Admin extends Admin_Controller
     public function index()
     {
         $extra['title'] = lang('faq:faqs');
+        $extra['sorting'] = true;
         $extra['buttons'] = array(
             array(
                 'label' => lang('global:edit'),
@@ -51,7 +52,7 @@ class Admin extends Admin_Controller
             )
         );
 
-        $this->streams->cp->entries_table('faqs', 'faq', 3, 'admin/faq/index', true, $extra);
+        $this->streams->cp->entries_table('faqs', 'faq', Settings::get('records_per_page'), 'admin/faq/index', true, $extra);
     }
 
     // --------------------------------------------------------------------------
