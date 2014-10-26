@@ -41,12 +41,14 @@ class Admin_fields extends Admin_Controller {
 		$buttons = array(
 			array(
 				'url'		=> 'admin/mystream/fields/edit/-assign_id-/'.$stream_id, 
-				'label'		=> $this->lang->line('global:edit')
+				'label'		=> $this->lang->line('global:edit'),
+                'locked'    => true
 			),
 			array(
 				'url'		=> 'admin/mystream/fields/delete/-assign_id-/'.$stream_id,
 				'label'		=> $this->lang->line('global:delete'),
-				'confirm'	=> true
+				'confirm'	=> true,
+                'locked'    => true
 			)
 		);
 

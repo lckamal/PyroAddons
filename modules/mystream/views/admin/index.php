@@ -27,7 +27,7 @@
 			<?php foreach($streams['entries'] as $item): ?>
 			<tr>
 				<td><?php echo $item['id']?></td>
-				<td><?php echo $item['stream_name']?></td>
+				<td><?php echo $this->fields->translate_label($item['stream_name'])?></td>
 				<td><?php echo $item['stream_slug']?></td>
 				<td><?php echo $item['stream_namespace']?></td>
 				<td><?php echo $item['stream_prefix']?></td>
