@@ -8,10 +8,10 @@
 	{
 		return array(
 			'name' => array(
-				'en' => 'imagepicker'
+				'en' => 'Image/File picker'
 			),
 			'description' => array(
-				'en' => 'This is a PyroCMS module template.'
+				'en' => 'Image/File picker Module.'
 			),
 			'frontend' => TRUE,
 			'backend' => TRUE

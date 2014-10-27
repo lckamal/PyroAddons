@@ -104,6 +104,69 @@ class Field_imagepicker
 		return $return;
 	}
 	
+	public function pre_output($input, $params)
+	{
+		if ( ! $input or $input == 'dummy' ) return null;
+
+		// Get image data
+		$image = $this->CI->db->select('filename, alt_attribute, description, name')->where('id', $input)->get('files')->row();
+
+		if ( ! $image) return null;
+
+		// This defaults to 100px wide
+		return '<img src="'.site_url('files/thumb/'.$input).'" alt="'.$this->obvious_alt($image).'" />';
+	}
+
+	public function pre_output_plugin($input, $params)
+	{
+		if ( ! $input or $input == 'dummy' ) return null;
+
+		$this->CI->load->library('files/files');
+
+		$file = Files::get_file($input);
+
+		if ($file['status'])
+		{
+			$image = $file['data'];
+
+			// If we don't have a path variable, we must have an
+			// older style image, so let's create a local file path.
+			if ( ! $image->path)
+			{
+				$image_data['image'] = base_url($this->CI->config->item('files:path').$image->filename);
+			}
+			else
+			{
+				$image_data['image'] = str_replace('{{ url:site }}', base_url(), $image->path);
+			}
+
+			// For <img> tags only
+			$alt = $this->obvious_alt($image);
+
+			$image_data['filename']			= $image->filename;
+			$image_data['name']				= $image->name;
+			$image_data['alt']				= $image->alt_attribute;
+			$image_data['description']		= $image->description;
+			$image_data['img']				= img(array('alt' => $alt, 'src' => $image_data['image']));
+			$image_data['ext']				= $image->extension;
+			$image_data['mimetype']			= $image->mimetype;
+			$image_data['width']			= $image->width;
+			$image_data['height']			= $image->height;
+			$image_data['id']				= $image->id;
+			$image_data['filesize']			= $image->filesize;
+			$image_data['download_count']	= $image->download_count;
+			$image_data['date_added']		= $image->date_added;
+			$image_data['folder_id']		= $image->folder_id;
+			$image_data['folder_name']		= $image->folder_name;
+			$image_data['folder_slug']		= $image->folder_slug;
+			$image_data['thumb']			= site_url('files/thumb/'.$input);
+			$image_data['large']			= site_url('files/large/'.$input);
+			$image_data['thumb_img']		= img(array('alt' => $alt, 'src'=> site_url('files/thumb/'.$input)));
+
+			return $image_data;
+		}
+	}
+
 	/**
 	 * Default width of image
 	 *
@@ -196,6 +259,16 @@ class Field_imagepicker
 		echo $this->CI->type->load_view('imagepicker', 'index', $data, true);
 	}
 
+	private function obvious_alt($image)
+	{
+		if ($image->alt_attribute) {
+			return $image->alt_attribute;
+		}
+		if ($image->description) {
+			return $image->description;
+		}
+		return $image->name;
+	}
 	
 }
 

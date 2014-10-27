@@ -1,4 +1,4 @@
-// A closure, to keep thing private.
+﻿// A closure, to keep thing private.
 // http://enterprisejquery.com/2010/10/how-good-c-habits-can-encourage-bad-javascript-habits-part-1/
 (function(ImagePicker, $, undefined) {
 
