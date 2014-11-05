@@ -16,6 +16,7 @@
 - Slider - Bootstrap slider
 - Slider - Flex slider
 - Testimonials
+- Choice - Manage choice options from database.
 
 ##Field Types
 - Template
