@@ -20,7 +20,7 @@
 			
 			?>
 				<fieldset>
-				<legend><?php echo ucfirst($lang['folder']); ?></legend>
+				<legend><p><?php echo ucfirst($lang['folder']); ?></p></legend>
 				<ul>
 					<li>
 						<label for="meta_title">Title</label>

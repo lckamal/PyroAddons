@@ -51,6 +51,7 @@ class Admin extends Admin_Controller
 
         // Build the page
         $this->template->title($this->module_details['name']. " &raquo; ".$field_slug)
+                ->append_js('module::entry_sorting.js')
                 ->build('admin/view', $this->data);
 
     }

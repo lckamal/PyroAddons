@@ -74,6 +74,12 @@ class Module_Choice extends Module
 					'unsigned' => TRUE,
 					'auto_increment' => TRUE
                   ),
+                'ordering_count' => array(
+                    'type' => 'INT',
+                    'constraint' => '5',
+                    'unsigned' => TRUE,
+                    'default' => 0
+                ),
                 'field_slug' => array(
 					'type' => 'VARCHAR',
 					'constraint' => '30',
