@@ -47,7 +47,7 @@ class Admin extends Admin_Controller
     public function view($field_slug = null)
     {
         $this->data->field = $this->db->where(array('field_slug' => $field_slug))->get('data_fields')->row();
-        $this->data->field_choices = $this->choice_m->where(array('field_slug' => $field_slug, 'choice_lang' => AUTO_LANGUAGE))->get_all();
+        $this->data->field_choices = $this->choice_m->where(array('field_slug' => $field_slug, 'choice_lang' => AUTO_LANGUAGE))->order_by('ordering_count', 'asc')->get_all();
 
         // Build the page
         $this->template->title($this->module_details['name']. " &raquo; ".$field_slug)

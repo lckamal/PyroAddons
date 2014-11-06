@@ -560,7 +560,7 @@ class Field_dbchoice
 
 		class_exists('Choice_m') OR ci()->load->model('choice/choice_m');
 		$where = array('field_slug' => $field_slug, 'choice_lang' => AUTO_LANGUAGE);
-		$dbchoices = ci()->choice_m->where($where)->dropdown('choice_id', 'choice_title');
+		$dbchoices = ci()->choice_m->where($where)->order_by('ordering_count', 'asc')->dropdown('choice_id', 'choice_title');
 		return array_merge($choices, (array)$dbchoices);
 	}
 
