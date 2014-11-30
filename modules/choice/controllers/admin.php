@@ -120,6 +120,7 @@ class Admin extends Admin_Controller
     public function delete($field_slug = null, $id = 0)
     {
         $this->choice_m->delete_by('choice_id', $id);
+        $this->pyrocache->delete_all('choice_m');
         $this->session->set_flashdata('error', lang('choice:deleted'));
         redirect('admin/choice/view/'.$field_slug);
     }
@@ -159,6 +160,7 @@ class Admin extends Admin_Controller
 	    	}
 	    	
 	    }
+        $this->pyrocache->delete_all('choice_m');
 	    return true;
 	}
 	

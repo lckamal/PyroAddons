@@ -21,20 +21,12 @@ class Choice_m extends MY_Model {
         
 	}
 
-	/**
-	 * get choices with press and language.
-	 * 
-	 * @access public
-	 * @param int $press_id (default: 0)
-	 * @param string $lang (default: 'en')
-	 * @return void
-	 */
-	public function get_choices($press_id = 0, $lang = 'en')
+	public function choice_dropdown($options = array())
 	{
-		return $this->choice_m
-	    	->join('presses_choices', 'presses_choices.choices_id = choice_choices.id', 'left')
-	    	->where(array('presses_choices.row_id' => $press_id,
-	    		'choice_choices.choice_lang' => $lang))
-	    	->get_all();
+		$where['choice_lang'] = isset($options['choice_lang']) ? $options['choice_lang'] : AUTO_LANGUAGE;
+		if(isset($options['field_slug'])){
+			$where['field_slug'] = $options['field_slug'];
+		}
+		return $this->where($where)->order_by('ordering_count', 'asc')->dropdown('choice_id', 'choice_title');
 	}
 }

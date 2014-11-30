@@ -82,7 +82,7 @@ class Module_Choice extends Module
                 ),
                 'field_slug' => array(
 					'type' => 'VARCHAR',
-					'constraint' => '30',
+					'constraint' => '100',
 				),
 				'choice_title' => array(
 					'type' => 'VARCHAR',

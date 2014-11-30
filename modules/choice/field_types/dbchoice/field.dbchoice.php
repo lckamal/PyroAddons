@@ -420,7 +420,7 @@ class Field_dbchoice
 	 */
 	public function pre_output_plugin($input, $params)
 	{
-		$choices = $this->_get_db_choices($params['field_slug'], $params['choice_type'], 'no');
+		$options = $this->_get_db_choices($params['field_slug'], $params['choice_type'], 'no');
 
 		// Checkboxes
 		if ($params['choice_type'] == 'checkboxes' || $params['choice_type']== 'multiselect')
@@ -448,9 +448,7 @@ class Field_dbchoice
 			
 			return $return;
 		}
-
 		$this->plugin_return = 'merge';
-	
 		if (isset($options[$input]) and $input != '')
 		{
 			$choices['key']		= $input;
@@ -560,8 +558,8 @@ class Field_dbchoice
 
 		class_exists('Choice_m') OR ci()->load->model('choice/choice_m');
 		$where = array('field_slug' => $field_slug, 'choice_lang' => AUTO_LANGUAGE);
-		$dbchoices = ci()->choice_m->where($where)->order_by('ordering_count', 'asc')->dropdown('choice_id', 'choice_title');
-		return array_merge($choices, (array)$dbchoices);
+		$dbchoices = ci()->pyrocache->model('choice_m', 'choice_dropdown', array($where));
+		return $return = $choices + (array)$dbchoices;
 	}
 
 }
