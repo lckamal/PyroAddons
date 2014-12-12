@@ -38,6 +38,9 @@ class Widget_Childpage extends Widgets
 			'field' => 'layout',
 			'label' => 'Layout',
 		),array(
+			'field' => 'image_position',
+			'label' => 'Image Position',
+		),array(
 			'field' => 'row_class',
 			'label' => 'Row Class',
 		),array(
@@ -52,19 +55,24 @@ class Widget_Childpage extends Widgets
 		class_exists("Page_m") or $this->load->model('pages/page_m');
 		$page_options = $this->_build_tree_select(array('current_parent' => $options['page_id']));
 		$layout_options = array('grid' => 'Bootstrip Grid', 'accordion' => 'Bootstrip Accordion');
+		$image_display_options = array('left' => 'Left', 'right' => 'Right', 'top' => 'Top Block');
 
 		!empty($options['page_id']) OR $options['page_id'] = false;
 		!empty($options['read_more']) OR $options['read_more'] = false;
 		!empty($options['layout']) OR $options['layout'] = 'grid';
+		!empty($options['image_display']) OR $options['image_display'] = 'left';
+		!empty($options['image_width']) OR $options['image_width'] = '200';
 		!empty($options['row_class']) OR $options['row_class'] = 'row';
 		!empty($options['col_class']) OR $options['col_class'] = 'col-xs-4';
 		!empty($options['limit']) OR $options['limit'] = '4';
+		!empty($options['text_limit']) OR $options['text_limit'] = '30';
 
 		// return the good stuff
 		return array(
 			'options'	=> $options,
 			'page_options'	=> $page_options,
 			'layout_options'	=> $layout_options,
+			'image_display_options' => $image_display_options
 		);
 	}
 
@@ -87,14 +95,6 @@ class Widget_Childpage extends Widgets
 
 	private function _build_tree_select($params)
 	{
-		// isset($params['select']) ? ci()->db->select($params['select']) : '';
-		// isset($params['join']) ? ci()->db->join($params['join']['table'], $params['join']['condition'], $params['join']['type']) : '';
-		// isset($params['where']) ? ci()->db->where($params['where']) : array();
-	
-		// unset($params['select']);
-		// unset($params['where']);
-		// unset($params['join']);
-		
 		$params = array_merge(array(
 			'tree'			=> array(),
 			'parent_id'		=> 0,
