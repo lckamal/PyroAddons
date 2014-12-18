@@ -56,11 +56,12 @@ class Admin extends Admin_Controller
 			$data->folders_tree[$folder->id] = repeater('&raquo; ', $folder->depth) . $folder->name;
 		}
 
+        Asset::add_path('imagepicker', IMAGEPICKER_PATH.'imagepicker/');
 		$this->template
 			->set_layout('modal')
             //->append_js('jquery/jquery.1.11.js')
-			->append_js('module::imagepicker.js')
-			->append_css('module::admin.css')
+			->append_js('imagepicker::imagepicker.js')
+			->append_css('imagepicker::imagepicker.css')
 			->build('admin/index', $data);
 	}
 
@@ -111,4 +112,16 @@ class Admin extends Admin_Controller
 
 		//redirect("admin/imagepicker/{$this->input->post('redirect_to')}/upload/{$this->input->post('folder_id')}");
 	}
+
+    public function new_folder()
+    {
+        $folder_name = $this->input->post('name');
+        $parent_folder = (int)$this->input->post('folder_id');
+
+        $results = Files::create_folder($parent_folder, $folder_name);
+
+        $this->session->set_flashdata($results['status'] ? 'success' : 'notice', $results['message']);
+        $redirect_to = $this->input->post('redirect_to') ? $this->input->post('redirect_to') : 'admin/imagepicker/index/'.$input['folder_id'];
+        redirect($redirect_to);
+    }
 }

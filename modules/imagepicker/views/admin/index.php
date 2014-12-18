@@ -1,4 +1,4 @@
-<div id="upload-box">
+<div id="upload-box" class="modal-box">
 	<h3><?php echo lang('files:upload') ?><span class="close ui-icon ui-icon-closethick">&#10060;</span></h3>
     <?php echo form_open_multipart('imagepicker/upload') ?>
 		<?php //echo form_hidden('redirect_to', uri_string()) ?>
@@ -27,6 +27,27 @@
 		</ul>
 	<?php echo form_close() ?>
 </div>
+<div id="folder-box" class="modal-box">
+    <h3><?php echo lang('files:new_folder') ?><span class="close ui-icon ui-icon-closethick">&#10060;</span></h3>
+    <?php echo form_open('imagepicker/admin/new_folder') ?>
+        <?php //echo form_hidden('redirect_to', uri_string()) ?>
+        <ul>
+            <li>
+                <label for="folder_id"><?php echo lang('files:folder') ?></label>
+                <?php echo form_dropdown('folder_id', array(0 => lang('files:select_folder')) + $folders_tree, 'id="folder"') ?>
+            </li>
+            <li>
+                <label for="name"><?php echo lang('files:name') ?></label>
+                <?php echo form_input('name', set_value('name'), 'id="name"') ?>
+            </li>
+            <li>
+                <label for="file">&nbsp;</label>
+                <?php echo form_submit('button_action', lang('save_label'), 'class="button"') ?>
+                <a href="<?php echo current_url() ?>#" class="button cancel"><?php echo lang('cancel_label') ?></a>
+            </li>
+        </ul>
+    <?php echo form_close() ?>
+</div>
 <div id="imagepicker-box">
 <div id="files_browser">
 	<div id="files_left_pane">
@@ -44,9 +65,10 @@
 			
 		<?php endif ?>
 		</ul>
-        <ul>
-            <li class="upload">
+        <ul class="button-group">
+            <li>
                 <?php echo anchor("imagepicker/upload", lang('files:upload'), 'title="upload" class="open-uploader"') ?>
+                <?php echo anchor("imagepicker/new_folder", lang('files:new_folder'), 'title="New Folder" class="open-folderform"') ?>
             </li>
         </ul>
 	</div>
@@ -112,9 +134,14 @@
 
             return false;
         });
+        $(".open-folderform").live('click', function(){
+            $("#folder-box").show();
+
+            return false;
+        });
 
         $(".close, .cancel").live('click', function(){
-            $("#upload-box").hide();
+            $(".modal-box").hide();
             return false;
         });
 
@@ -171,7 +198,7 @@
                     $(this).children().fadeIn('slow');
                 });
             } else {
-                var box = $('#upload-box');
+                var box = $('.modal-box');
                 if (box.is( ":visible" )) {
                     // Hide - slide up.
                     box.fadeOut( 800 );

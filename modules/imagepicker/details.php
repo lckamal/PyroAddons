@@ -18,13 +18,16 @@
         $core_path = defined('PYROPATH') ? PYROPATH : APPPATH;
 
         if (is_dir(SHARED_ADDONPATH.'modules/imagepicker/field_types')) {
-            $this->type->addon_paths['imagepicker'] = SHARED_ADDONPATH.'modules/imagepicker/field_types/';
+            $imagepicker_path = SHARED_ADDONPATH.'modules/imagepicker/field_types/';
+            $this->type->addon_paths['imagepicker'] = $imagepicker_path;
         } elseif (is_dir($core_path.'modules/imagepicker/field_types')) {
-            $this->type->addon_paths['imagepicker'] = $core_path.'modules/imagepicker/field_types/';
+            $imagepicker_path = $core_path.'modules/imagepicker/field_types/';
+            $this->type->addon_paths['imagepicker'] = $imagepicker_path;
         } else {
-            $this->type->addon_paths['imagepicker'] = ADDONPATH.'modules/imagepicker/field_types/';
+            $imagepicker_path = ADDONPATH.'modules/imagepicker/field_types/';
+            $this->type->addon_paths['imagepicker'] = $imagepicker_path;
         }
-
+        define('IMAGEPICKER_PATH', $imagepicker_path);
         $this->type->gather_types();
     }
 
