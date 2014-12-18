@@ -1,0 +1,19 @@
+/* 
+    Document   : faq
+    Created on : Jun 7, 2012, 8:50:04 AM
+    Author     : valeryan
+    Description: Adds basic stlying to FAQs.
+*/
+.product {
+	min-height: 370px;
+}
+
+.product p{
+	height: 100px;
+	line-height: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+
