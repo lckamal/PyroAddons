@@ -130,11 +130,13 @@
 <script type="text/javascript">
     $(function(){
         $(".open-uploader").live('click', function(){
+            $(".modal-box").hide();
             $("#upload-box").show();
 
             return false;
         });
         $(".open-folderform").live('click', function(){
+            $(".modal-box").hide();
             $("#folder-box").show();
 
             return false;

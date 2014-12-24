@@ -1,6 +1,6 @@
-# PyroCMS Streams API Sample Module
+# PyroCMS Slider module with widget
 
-This module illustrates the use of the Streams Core API to handle data interaction within a PyroStreams module. It creates a simple Slider stream with a question field and an answer field.
+This module uses Streams Core API to handle data interaction within a PyroStreams module. It creates a simple Slider stream with slider and category which can be managed to use on multiple locations.
 
 ## Installation
 
