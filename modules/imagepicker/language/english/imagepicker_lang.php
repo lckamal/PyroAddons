@@ -9,8 +9,8 @@ $lang = array(
     'imagepicker.label.left'    =>  'Left',
     'imagepicker.label.right'   =>  'Right',
     'imagepicker.label.none'    =>  'None',
-    'imagepicker.meta.mime'     =>  'Mime Type'
-    
+    'imagepicker.meta.mime'     =>  'Mime Type',
+    'imagepicker.select'        => 'Select file'
 );
 
 /* end of file imagepicker_lang.php */

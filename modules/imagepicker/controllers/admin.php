@@ -12,9 +12,79 @@ class Admin extends Admin_Controller
 		$this->lang->load('files/files');
 		$this->lang->load('imagepicker');
 
+        $this->load->library('files/files');
+        
+        $allowed_extensions = array();
+        foreach (config_item('files:allowed_file_ext') as $type) 
+        {
+            $allowed_extensions = array_merge($allowed_extensions, $type);
+        }
+
+        $this->template->append_metadata(
+            "<script>
+                pyro.lang.fetching = '".lang('files:fetching')."';
+                pyro.lang.fetch_completed = '".lang('files:fetch_completed')."';
+                pyro.lang.start = '".lang('files:start')."';
+                pyro.lang.width = '".lang('files:width')."';
+                pyro.lang.height = '".lang('files:height')."';
+                pyro.lang.ratio = '".lang('files:ratio')."';
+                pyro.lang.full_size = '".lang('files:full_size')."';
+                pyro.lang.cancel = '".lang('buttons:cancel')."';
+                pyro.lang.synchronization_started = '".lang('files:synchronization_started')."';
+                pyro.lang.untitled_folder = '".lang('files:untitled_folder')."';
+                pyro.lang.exceeds_server_setting = '".lang('files:exceeds_server_setting')."';
+                pyro.lang.exceeds_allowed = '".lang('files:exceeds_allowed')."';
+                pyro.files = { permissions : ".json_encode(Files::allowed_actions())." };
+                pyro.files.max_size_possible = '".Files::$max_size_possible."';
+                pyro.files.max_size_allowed = '".Files::$max_size_allowed."';
+                pyro.files.valid_extensions = '".implode('|', $allowed_extensions)."';
+                pyro.lang.file_type_not_allowed = '".addslashes(lang('files:file_type_not_allowed'))."';
+                pyro.lang.new_folder_name = '".addslashes(lang('files:new_folder_name'))."';
+                pyro.lang.alt_attribute = '".addslashes(lang('files:alt_attribute'))."';
+
+                // deprecated
+                pyro.files.initial_folder_contents = ".(int)$this->session->flashdata('initial_folder_contents').";
+            </script>");
+
 	}
-		
-	public function index($id = 0, $fileType = 'i') {
+
+    /**
+     * Folder Listing
+     */
+    public function index($parent_id = 0, $type = null)
+    {
+        Asset::add_path('files', 'system/cms/modules/files/');
+
+        $this->template
+            ->title($this->module_details['name'])
+            ->append_css('jquery/jquery.tagsinput.css')
+            ->append_css('files::jquery.fileupload-ui.css')
+            ->append_css('files::files.css')
+            ->append_css('module::files.css')
+            ->append_js('jquery/jquery.tagsinput.js')
+            ->append_js('files::jquery.fileupload.js')
+            ->append_js('files::jquery.fileupload-ui.js')
+            ->append_js('module::functions.js')
+
+            // should we show the "no data" message to them?
+            ->set('folders', $this->file_folders_m->count_by('parent_id', 0))
+            ->set('locations', array_combine(Files::$providers, Files::$providers))
+            ->set('type', $type)
+            ->set('folder_tree', Files::folder_tree());
+
+        $path_check = Files::check_dir(Files::$path);
+
+        if ( ! $path_check['status'])
+        {
+            $this->template->set('messages', array('error' => $path_check['message']));
+        }
+
+        $this->template
+            ->set_layout('colorbox')
+            ->build('admin/index');
+    }
+
+	public function _index($id = 0, $fileType = 'i') {
 		// if (!$this->input->is_ajax_request()) {
 		// 	die('Ajax requests only...');
 		// }
@@ -62,7 +132,7 @@ class Admin extends Admin_Controller
             //->append_js('jquery/jquery.1.11.js')
 			->append_js('imagepicker::imagepicker.js')
 			->append_css('imagepicker::imagepicker.css')
-			->build('admin/index', $data);
+			->build('files/admin/index', $data);
 	}
 
 	public function fileupload()
@@ -113,6 +183,21 @@ class Admin extends Admin_Controller
 		//redirect("admin/imagepicker/{$this->input->post('redirect_to')}/upload/{$this->input->post('folder_id')}");
 	}
 
+    /**
+     * Get all files and folders within a folder
+     *
+     * Grabs the parent id from the POST data.
+     */
+    public function folder_contents()
+    {
+        $parent = $this->input->post('parent');
+        $type = $this->input->post('type');
+        class_exists('Imagepicker_m') or $this->load->model('imagepicker_m');
+
+        ob_end_clean();
+        echo json_encode($this->imagepicker_m->folder_contents($parent, $type));
+    }
+
     public function new_folder()
     {
         $folder_name = $this->input->post('name');
@@ -124,4 +209,5 @@ class Admin extends Admin_Controller
         $redirect_to = $this->input->post('redirect_to') ? $this->input->post('redirect_to') : 'admin/imagepicker/index/'.$input['folder_id'];
         redirect($redirect_to);
     }
+
 }

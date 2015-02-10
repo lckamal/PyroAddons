@@ -1,0 +1,16 @@
+#container{
+    width:100%;
+    background: #fff;
+}
+ul, ol, ul li, ol li{
+	list-style: none;
+}
+section.side ul, ol{
+    margin:0;
+    padding: 0;
+}
+section.file-path{
+    border:none;
+    box-shadow: none;
+}
+ul#folders-sidebar, section.item, .folders-center{height: 500px;}

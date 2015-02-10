@@ -39,12 +39,12 @@
 	}
 
 	ImagePicker.close = function(opts) {
-		
+
 		var alignment = opts.alignment || $('input[name=insert_float]:checked').val() || 'none';
 		var size = opts.size || $('#insert_width').val() || 0;
 		var type = opts.type || $(this).find('input#type').val();
 		var name = opts.name || $(this).find('input#name').val();
-		var imageId = opts.imageId || 0;
+		var imageId = opts.id || 0;
 		
 		options.onPickCallback(imageId, size, alignment, type, name);
 
