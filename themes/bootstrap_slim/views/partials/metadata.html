@@ -1,0 +1,36 @@
+<meta charset="utf-8">
+<meta name="language" content="{{ lang:code }}">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="author" content="Philsquare">
+
+<!-- favicon -->
+{{ theme:favicon xhtml="false" }}
+
+<!-- Mobile Viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Set a base location for assets -->
+<base href="{{ url:base }}">
+
+<title>{{ settings:site_name }} | {{ template:title }}</title>
+
+<!--[if lt IE 8]><script src="assets/js/ie_font.js"></script><![endif]-->
+
+<!--style-->
+{{ asset:css file="theme::bootstrap.min.css" group="global" }}
+{{ asset:css file="theme::application.css" group="global" }}
+
+<!-- scripts -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{{ theme:js_path file="jquery-v1.11.0.js" }}" type="text/javascript" charset="utf-8"><\/script>')</script>
+
+{{ asset:js file="theme::bootstrap.min.js" group="global" }}
+{{ asset:js file="theme::application.js" group="global" }}
+
+{{ asset:render group="global" }}
+
+<!-- injected metadata -->
+{{ template:metadata }}
+
+<!-- Google Analytics -->
+{{ integration:analytics }}

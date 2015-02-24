@@ -1,0 +1,25 @@
+<div class="container">
+	
+	<div class="row">
+		<div class="col-xs-12">
+			{{ session:messages success="alert alert-success" notice="alert alert-info" error="alert alert-danger" }}
+		</div>
+	</div>
+	
+	<ul class="breadcrumb">
+		<li><a href="{{ url:site }}">Home</a></li>
+		{{ template:breadcrumbs }}
+		{{ if uri }}
+		<li>{{ url:anchor segments=uri title=name }}</li>
+		{{ else }}
+		<li class="current">{{ name }}</li>
+		{{ endif }}
+		{{ /template:breadcrumbs }}
+	</ul>
+		
+	<div class="row">
+		<div class="col-xs-12">
+			{{ template:body }}
+		</div>
+	</div>
+</div>
