@@ -59,17 +59,18 @@ class Field_imagepicker
 		$del_button = '<button href="javascript:void(1)" id="remove_'.$data['form_slug'].'" class="btn red">X</button>';
 		
 		//add related js and css
-		$this->CI->type->add_css('imagepicker', 'imagepicker.css');
+		// $this->CI->type->add_css('imagepicker', 'imagepicker.css');
     	$this->CI->type->add_js('imagepicker', 'imagepicker.js');
     	
 		$return = '<script type="text/javascript">
 			(function($) {  
 				$("#btn_'.$data['form_slug'].'").livequery("click", function(){
+                    $select_button = $(this);
 					ImagePicker.open({
 						fileType : "'.$type.'",
 						onPickCallback      : function(imageId, size, alignment, type, name) {
 							var image = \'<img class="pyro-image" src="'.base_url().'files/thumb/\'+imageId+\'/'.$img_width.'/'.$img_width.'" width="'.$img_width.'"/>'.$del_button.'\';
-							$("#'.$data['form_slug'].'").val(imageId);
+                            $select_button.closest("div").find("#'.$data['form_slug'].'").val(imageId);
 							var view = (type == "i") ? image : name + \''.$del_button.'\';
 
 							$("#preview_'.$data['form_slug'].'").html(view);
